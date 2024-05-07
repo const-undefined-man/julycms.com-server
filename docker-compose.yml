@@ -1,0 +1,43 @@
+version: '3.8'
+services:
+  console-ui:
+    image: 20230709/julycms-console-ui:1.0.0
+    ports:
+      - 82:80
+    depends_on:
+      - api-server
+    networks:
+      - julycms-network
+  api-server:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    ports:
+      - '3000:3000'
+    environment:
+      NODE_ENV: 'prod'
+    depends_on:
+      - mysql-server
+      - redis-server
+    networks:
+      - julycms-network
+  mysql-server:
+    image: mysql
+    ports:
+      - 3306:3306
+    volumes:
+      - /Users/sole/docker/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=julyCms
+      - MYSQL_ROOT_PASSWORD=123123123
+    networks:
+      - julycms-network
+  redis-server:
+    image: redis:alpine3.19
+    volumes:
+      - /Users/sole/docker/redis:/data
+    networks:
+      - julycms-network
+networks:
+  julycms-network:
+    driver: bridge

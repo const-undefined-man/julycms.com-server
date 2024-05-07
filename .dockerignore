@@ -1,0 +1,7 @@
+node_modules/
+.vscode/
+.git/
+logs/
+.DS_Store
+*.hot-update.js
+*.hot-update.json
