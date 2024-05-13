@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   julycms-ui:
-    image: 20230709/20230709/julycms:1.0.0
+    image: 20230709/julycms:1.0.0
     ports:
       - 80:80
   console-ui:
