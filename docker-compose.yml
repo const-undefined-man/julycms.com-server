@@ -29,6 +29,7 @@ services:
     image: mysql
     ports:
       - 3306:3306
+    command: --init-file /julyCms.sql
     volumes:
       - /Users/sole/docker/mysql:/var/lib/mysql
     environment:
