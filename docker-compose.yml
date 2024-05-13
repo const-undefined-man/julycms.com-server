@@ -3,7 +3,7 @@ services:
   julycms-ui:
     image: 20230709/julycms:1.0.0
     ports:
-      - 80:80
+      - 81:80
   console-ui:
     image: 20230709/julycms-console-ui:1.0.0
     ports:
