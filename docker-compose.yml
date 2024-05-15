@@ -23,10 +23,12 @@ services:
       - julycms-network
   mysql-server:
     image: mysql
+    command: --init-file /docker-entrypoint-initdb.d/init.sql
     ports:
       - 3306:3306
     volumes:
       - /Users/sole/docker/mysql:/var/lib/mysql
+      - ./julyCms.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
       - MYSQL_DATABASE=julyCms
       - MYSQL_ROOT_PASSWORD=123123123

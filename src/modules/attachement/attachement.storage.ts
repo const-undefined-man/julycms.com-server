@@ -12,7 +12,7 @@ const storage = multer.diskStorage({
     ];
     const dir = 'uploads/' + ymd.join('');
     try {
-      fs.mkdirSync(path.join(__dirname, dir));
+      fs.mkdirSync(path.join(__dirname, dir), { recursive: true });
     } catch (e) {}
 
     cb(null, path.join(__dirname, dir));
