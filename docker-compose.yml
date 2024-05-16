@@ -32,6 +32,7 @@ services:
     environment:
       - MYSQL_DATABASE=julyCms
       - MYSQL_ROOT_PASSWORD=123123123
+      - TZ=Asia/Shanghai
     networks:
       - julycms-network
   redis-server:

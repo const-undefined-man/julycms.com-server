@@ -24,7 +24,7 @@ export default {
     entityPrefix: 'july_',
     synchronize: false,
     logging: false,
-    timezone: '+08:00',
+    timezone: 'local',
     autoLoadEntities: true,
     maxQueryExecutionTime: 1500,
     connectorPackage: 'mysql2',
