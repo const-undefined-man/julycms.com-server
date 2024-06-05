@@ -1,13 +1,5 @@
 version: '3.8'
 services:
-  console-ui:
-    image: 20230709/julycms-console-ui:1.0.0
-    ports:
-      - 82:80
-    depends_on:
-      - api-server
-    networks:
-      - julycms-network
   api-server:
     build:
       context: ./
