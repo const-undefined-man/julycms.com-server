@@ -34,7 +34,7 @@ export class DocumentService {
     const document = new Document();
     [
       'title',
-      'subTitle',
+      'description',
       'cover',
       'seoTitle',
       'seoKeywords',
@@ -136,10 +136,10 @@ export class DocumentService {
     return this.document.save(document);
   }
 
-  findAllList(catId: number, options: IPaginationOptions, wheres) {
+  findAllList(catId: number[], options: IPaginationOptions, wheres) {
     const where: any = {
       category: {
-        id: catId,
+        id: In(catId),
       },
     };
     if (wheres.id) {
@@ -148,7 +148,13 @@ export class DocumentService {
     if (wheres.title) {
       where.title = Like(`%${wheres.title}%`);
     }
-    return paginate(this.document, options, { where });
+    if (wheres.display) {
+      where.display = wheres.display;
+    }
+    return paginate(this.document, options, {
+      where,
+      relations: ['cover', 'link', 'albums'],
+    });
   }
 
   /**
@@ -206,7 +212,7 @@ export class DocumentService {
     [
       'id',
       'title',
-      'subTitle',
+      'description',
       'cover',
       'seoTitle',
       'seoKeywords',
@@ -348,5 +354,15 @@ export class DocumentService {
         ...item,
       };
     });
+  }
+
+  /**
+   * 增加阅读数
+   * @param id number 文档ID
+   * @param readNum number 阅读数
+   * @returns void
+   */
+  increaseRead(id: number, readNum: number) {
+    this.document.update(id, { readNum });
   }
 }

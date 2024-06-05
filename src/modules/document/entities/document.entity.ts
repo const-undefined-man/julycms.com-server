@@ -24,9 +24,9 @@ export class Document extends CommonEntity {
   @Column({ type: 'varchar', length: 64, comment: '标题' })
   title: string | null;
 
-  @ApiPropertyOptional({ description: '副标题' })
-  @Column({ type: 'varchar', nullable: true, length: 64, comment: '副标题' })
-  subTitle: string | null;
+  @ApiPropertyOptional({ description: '描述' })
+  @Column({ type: 'varchar', nullable: true, length: 255, comment: '描述' })
+  description: string | null;
 
   @ApiPropertyOptional({ description: '标签', type: [Tag] })
   @ManyToMany(() => Tag, (tag) => tag.documents, {
@@ -110,6 +110,8 @@ export class Document extends CommonEntity {
   @OneToMany(() => Counter, (counter) => counter.document, {
     cascade: true,
     createForeignKeyConstraints: false,
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   })
   counter: Counter[];
 }

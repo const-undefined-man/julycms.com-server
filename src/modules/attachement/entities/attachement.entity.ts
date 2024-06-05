@@ -57,6 +57,10 @@ export class Attachement extends CommonEntity {
   @OneToOne(() => Category, (category) => category.cover)
   category: Category;
 
+  @ApiPropertyOptional({ type: Category })
+  @OneToOne(() => Category, (category) => category.imgIcon)
+  categoryImgIcon: Category;
+
   @ApiPropertyOptional({ type: Document })
   @OneToOne(() => Document, (document) => document.cover)
   document: Document;

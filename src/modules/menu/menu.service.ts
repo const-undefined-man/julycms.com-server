@@ -47,21 +47,6 @@ export class MenuService {
           : createMenuDto.componentPath;
     }
 
-    // 操作按钮
-    const actions = [];
-    if (createMenuDto.actions) {
-      createMenuDto.actions.forEach((v) => {
-        const item = {
-          type: 1,
-          name: v.label,
-          mark: v.value,
-        };
-        actions.push(item);
-      });
-
-      menu.children = actions;
-    }
-
     // console.log(menu);
     return this.menu.save(menu);
   }

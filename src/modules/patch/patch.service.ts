@@ -254,4 +254,15 @@ export class PatchService {
   sortPatchList(patchListId: number, listorder: number) {
     return this.patchList.update(patchListId, { listorder });
   }
+
+  async getPatch(id: number) {
+    const patch = await this.patch.findOne({
+      where: { id },
+      relations: ['patchText', 'patchList', 'patchList.img'],
+    });
+    if (!patch || !patch.display) {
+      return {};
+    }
+    return patch;
+  }
 }

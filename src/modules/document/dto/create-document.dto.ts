@@ -7,6 +7,7 @@ import {
   IsObject,
   IsOptional,
   Length,
+  MaxLength,
   ValidateNested,
 } from 'class-validator';
 import { Content } from '../entities/content.entity';
@@ -21,10 +22,10 @@ export class CreateDocumentDto {
   @Length(1, 64, { message: '标题为1~64位字符' })
   title: string;
 
-  @ApiPropertyOptional({ description: '副标题', example: '副标题' })
-  @Length(0, 64, { message: '副标题为1~64位字符' })
+  @ApiPropertyOptional({ description: '描述', example: '描述' })
+  @MaxLength(255, { message: '描述最大为255个字符' })
   @IsOptional()
-  subTitle: string;
+  description: string;
 
   @ApiPropertyOptional({ description: '封面图片', example: '封面图片' })
   @IsOptional()
@@ -33,16 +34,16 @@ export class CreateDocumentDto {
 
   @ApiPropertyOptional({ description: 'SEO标题', example: 'SEO标题' })
   @IsOptional()
-  @Length(0, 128, { message: 'SEO标题大为128位字符' })
+  @MaxLength(128, { message: 'SEO标题大为128位字符' })
   seoTitle: string;
 
   @ApiPropertyOptional({ description: 'SEO关键词', example: 'SEO关键词' })
-  @Length(0, 255, { message: 'SEO关键词最大为255位字符' })
+  @MaxLength(255, { message: 'SEO关键词最大为255位字符' })
   @IsOptional()
   seoKeywords: string;
 
   @ApiPropertyOptional({ description: 'SEO描述', example: 'SEO描述' })
-  @Length(0, 255, { message: 'SEO描述最大为255位字符' })
+  @MaxLength(255, { message: 'SEO描述最大为255位字符' })
   @IsOptional()
   seoDescription: string;
 
@@ -88,6 +89,7 @@ export class CreateDocumentDto {
     description: '链接模型',
     example: { url: 'https://www.zhuolian.tech', follow: 1, target: 0 },
   })
+  @IsOptional()
   @Type(() => LinkDto)
   @ValidateNested()
   link: LinkDto;

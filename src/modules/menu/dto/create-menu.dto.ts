@@ -1,11 +1,10 @@
-import { DictValue } from '@app/modules/dict-value/entities/dict-value.entity';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
-  IsArray,
   IsNotEmpty,
   IsNumber,
   IsOptional,
   Length,
+  MaxLength,
 } from 'class-validator';
 export class CreateMenuDto {
   @ApiProperty({
@@ -37,6 +36,7 @@ export class CreateMenuDto {
     example: 'el-icon-aaa',
   })
   @IsOptional()
+  @MaxLength(32, { message: '菜单图标最大为32个字符' })
   icon?: string;
 
   @ApiPropertyOptional({
@@ -44,6 +44,7 @@ export class CreateMenuDto {
     example: '菜单',
   })
   @IsOptional()
+  @MaxLength(32, { message: '组件名称最大为32个字符' })
   componentName?: string;
 
   @ApiPropertyOptional({
@@ -51,15 +52,15 @@ export class CreateMenuDto {
     example: '/menu1',
   })
   @IsOptional()
-  @IsNotEmpty({ message: '路由地址不能为空' })
+  @MaxLength(128, { message: '路由地址最大为128个字符' })
   componentRoute: string;
 
   @ApiPropertyOptional({
-    description: '组件地址',
+    description: '组件路径',
     example: '/menu/index.vue',
   })
   @IsOptional()
-  @IsNotEmpty({ message: '组件地址不能为空' })
+  @MaxLength(128, { message: '组件路径最大为128个字符' })
   componentPath: string;
 
   @ApiPropertyOptional({
@@ -79,23 +80,16 @@ export class CreateMenuDto {
   @IsOptional()
   display: number;
 
-  @ApiPropertyOptional({ description: '菜单风格', example: 'primary' })
+  @ApiPropertyOptional({ description: '按钮/菜单风格', example: 'primary' })
   @IsOptional()
-  @Length(1, 16, { message: '风格为1-16位字符' })
+  @Length(0, 16, { message: '风格最大为16个字符' })
   style: string;
-
-  @ApiPropertyOptional({
-    description: '操作按钮',
-    example: [{ id: 1, name: '添加' }],
-  })
-  @IsArray({ message: '操作按钮为数组' })
-  @IsOptional()
-  actions: DictValue[];
 
   @ApiPropertyOptional({
     description: '父级菜单',
     example: [{ id: 1 }],
   })
+  @IsOptional()
   @IsNumber(undefined, { message: '父级菜单为数字' })
   parent: number;
 }

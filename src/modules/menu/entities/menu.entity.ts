@@ -82,13 +82,13 @@ export class Menu extends CommonEntity {
   })
   quickmenu: number;
 
-  @ApiPropertyOptional({ description: '按钮分割' })
+  @ApiPropertyOptional({ description: '按钮/菜单风格' })
   @Column({
     type: 'varchar',
     nullable: true,
     length: 16,
     default: 'default',
-    comment: '按钮分割',
+    comment: '按钮/菜单风格',
   })
   style: string | null;
 

@@ -42,10 +42,10 @@ export class ConsoleService {
   }
 
   async dashboard() {
-    const documentTatal = await this.documentService.count();
-    const categoryTatal = await this.categoryService.count();
-    const tagTatal = await this.tagService.count();
-    const attachementTatal = await this.attachementService.count();
+    const documentTotal = await this.documentService.count();
+    const categoryTotal = await this.categoryService.count();
+    const tagTotal = await this.tagService.count();
+    const attachementTotal = await this.attachementService.count();
 
     const clickCount = await this.counterService.countDocument();
 
@@ -55,10 +55,10 @@ export class ConsoleService {
 
     return {
       count: {
-        document: documentTatal,
-        category: categoryTatal,
-        tag: tagTatal,
-        attachement: attachementTatal,
+        document: documentTotal,
+        category: categoryTotal,
+        tag: tagTotal,
+        attachement: attachementTotal,
       },
       clickCount,
       categoryCount,

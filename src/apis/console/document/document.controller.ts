@@ -22,15 +22,23 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { VerifyPermission, ReflectMetadataKeys } from '@app/common';
+import {
+  VerifyPermission,
+  ReflectMetadataKeys,
+  BusinessException,
+} from '@app/common';
 import { Document } from '@app/modules/document/entities/document.entity';
+import { CategoryService } from '@app/modules/category/category.service';
 
 @ApiTags('内容管理')
 @ApiBearerAuth()
 @Controller('api/console/document')
 @SetMetadata(ReflectMetadataKeys.CONTROLLER_NAME, '内容管理')
 export class DocumentController {
-  constructor(private readonly documentService: DocumentService) {}
+  constructor(
+    private readonly documentService: DocumentService,
+    private readonly categoryService: CategoryService,
+  ) {}
 
   @ApiOperation({ summary: '添加' })
   @SetMetadata(ReflectMetadataKeys.ACTION_NAME, '添加')
@@ -81,35 +89,25 @@ export class DocumentController {
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit = 10,
   ) {
-    // 文章模型，直接返回该模型关联的栏目文章列表
-    if (modelMark === 'article') {
-      return this.documentService.findAllList(
-        catId,
-        { page, limit },
-        { id, title },
-      );
-    }
-    // 图集模型，返回该模型关联的栏目图集列表
-    else if (modelMark === 'album') {
-      return this.documentService.findAllList(
-        catId,
-        { page, limit },
-        { id, title },
-      );
+    // 这里是根据栏目id获取栏目数据
+    const cateinfo = await this.categoryService.findById(catId);
+    if (!cateinfo) {
+      throw new BusinessException({ code: 404, message: '栏目不存在' });
     }
     // 单页模型
-    else if (modelMark === 'page') {
+    if (modelMark === 'page') {
       const page = await this.documentService.findOnePage(catId);
       if (page) {
         return page;
       }
 
       return this.documentService.findAllPage(catId);
-    }
-    // 链接模型
-    else if (modelMark === 'link') {
+    } else {
+      const ids = cateinfo.children.length
+        ? cateinfo.children.map((item) => item.id)
+        : [cateinfo.id];
       return this.documentService.findAllList(
-        catId,
+        ids,
         { page, limit },
         { id, title },
       );

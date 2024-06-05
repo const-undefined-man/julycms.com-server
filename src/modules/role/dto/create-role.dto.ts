@@ -1,6 +1,12 @@
 import { Menu } from '@app/modules/menu/entities/menu.entity';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsArray, IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
+import {
+  IsArray,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  MaxLength,
+} from 'class-validator';
 
 export class CreateRoleDto {
   @ApiProperty({ description: '角色名称', example: '角色1' })
@@ -9,6 +15,7 @@ export class CreateRoleDto {
 
   @ApiPropertyOptional({ description: '角色描述', example: '测试角色' })
   @IsOptional()
+  @MaxLength(255, { message: '角色描述最大为255个字符' })
   description: string;
 
   @ApiPropertyOptional({

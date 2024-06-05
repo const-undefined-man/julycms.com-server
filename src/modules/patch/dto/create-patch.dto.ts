@@ -1,5 +1,11 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber, IsOptional, Length } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  Length,
+  MaxLength,
+} from 'class-validator';
 
 export class CreatePatchDto {
   @ApiProperty({ description: '标题', example: '标题' })
@@ -9,7 +15,7 @@ export class CreatePatchDto {
 
   @ApiPropertyOptional({ description: '描述', example: '描述' })
   @IsOptional()
-  @Length(0, 255, { message: '描述为0~255位字符' })
+  @MaxLength(255, { message: '描述最大为255个字符' })
   description: string;
 
   @ApiPropertyOptional({ description: '类型', example: 0 })

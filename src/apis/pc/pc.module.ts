@@ -4,12 +4,20 @@ import { PcController } from './pc.controller';
 
 import {
   CategoryModule,
+  CounterModule,
   DocumentModule,
+  PatchModule,
   SiteSettingModule,
 } from '@app/modules';
 
 @Module({
-  imports: [SiteSettingModule, CategoryModule, DocumentModule],
+  imports: [
+    SiteSettingModule,
+    CategoryModule,
+    DocumentModule,
+    PatchModule,
+    CounterModule,
+  ],
   controllers: [PcController],
   providers: [PcService],
   exports: [PcService],

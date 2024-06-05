@@ -9,7 +9,7 @@ export class CreateAttachementDto {
 
   @ApiProperty()
   @IsNotEmpty({ message: 'url不能为空' })
-  @MaxLength(128, { message: 'url长度不能超过128' })
+  @MaxLength(128, { message: 'url长度最大为128个字符' })
   url: string;
 
   @ApiPropertyOptional()
@@ -19,7 +19,7 @@ export class CreateAttachementDto {
 
   @ApiPropertyOptional()
   @IsOptional()
-  @MaxLength(255, { message: 'mimetype长度不能超过255' })
+  @MaxLength(255, { message: 'mimetype长度最大为255个字符' })
   mimetype: string;
 
   @ApiProperty()

@@ -1,6 +1,6 @@
 import { Attachement } from '@app/modules/attachement/entities/attachement.entity';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber, IsOptional, IsUrl } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsOptional, MaxLength } from 'class-validator';
 
 export class CreatePatchListDto {
   @ApiProperty({ description: '碎片id', example: 1 })
@@ -17,19 +17,20 @@ export class CreatePatchListDto {
   title: string;
 
   @ApiPropertyOptional({ example: '碎片描述', description: '碎片描述' })
-  @IsOptional({ message: '碎片描述不能为空' })
+  @IsOptional()
+  @MaxLength(255, { message: '碎片描述最大为255个字符' })
   description: string;
 
   @ApiPropertyOptional({ example: '碎片图片', description: '碎片图片' })
-  @IsOptional({ message: '碎片图片不能为空' })
+  @IsOptional()
   img: Attachement;
 
   @ApiPropertyOptional({ example: '碎片链接', description: '碎片链接' })
-  @IsOptional({ message: '碎片链接不能为空' })
-  @IsUrl(undefined, { message: '碎片链接格式不正确' })
+  @IsOptional()
+  @MaxLength(255, { message: '碎片链接最大为255个字符' })
   url: string;
 
   @ApiPropertyOptional({ example: 99, description: '碎片排序' })
-  @IsOptional({ message: '碎片排序不能为空' })
+  @IsOptional()
   listorder: number;
 }

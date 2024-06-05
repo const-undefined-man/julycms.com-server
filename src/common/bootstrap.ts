@@ -11,7 +11,11 @@ declare const module: any;
 
 const corsOptionsDelegate = (req: Request, callback) => {
   let corsOptions;
-  const allowlist = ['http://localhost', 'http://localhost:8080'];
+  const allowlist = [
+    'http://localhost',
+    'http://localhost:8080',
+    'http://localhost:3001',
+  ];
   if (allowlist.indexOf(req.header('Origin')) !== -1) {
     // 如果你不需要 Cookie 可以设置为 *
     // credentials 与前端的axios 的withCredentials（XMLHttpRequest.withCredentials）

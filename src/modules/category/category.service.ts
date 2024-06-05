@@ -21,13 +21,14 @@ export class CategoryService {
   ) {}
 
   create(createCategoryDto: CreateCategoryDto, managerId: number) {
-    const { parent, siteModel, cover } = createCategoryDto;
+    const { parent, siteModel, cover, imgIcon } = createCategoryDto;
     const data = new Category();
     [
       'catname',
       'catnameEn',
       'catdir',
       'description',
+      'icon',
       'seoTitle',
       'seoKeywords',
       'seoDescription',
@@ -62,6 +63,25 @@ export class CategoryService {
       }
     }
 
+    // 关联附件-栏目图片icon
+    if (isNotEmptyObject(imgIcon)) {
+      const { url, size, mimetype } = imgIcon;
+
+      if (url) {
+        const attachement = new Attachement();
+        attachement.url = url;
+        attachement.size = size;
+        attachement.mimetype = mimetype;
+        attachement.operatorType = 1;
+
+        const manager = new Manager();
+        manager.id = managerId;
+        attachement.operator = manager;
+
+        data.imgIcon = attachement;
+      }
+    }
+
     // parent
     if (parent.id) {
       const parentCate = new Category();
@@ -93,7 +113,7 @@ export class CategoryService {
   }
 
   async update(updateCategoryDto: UpdateCategoryDto, managerId: number) {
-    const { parent, siteModel, cover } = updateCategoryDto;
+    const { parent, siteModel, cover, imgIcon } = updateCategoryDto;
     const data = new Category();
     [
       'id',
@@ -101,6 +121,7 @@ export class CategoryService {
       'catnameEn',
       'catdir',
       'description',
+      'icon',
       'seoTitle',
       'seoKeywords',
       'seoDescription',
@@ -139,6 +160,31 @@ export class CategoryService {
       attachement.operator = manager;
 
       data.cover = attachement;
+    }
+
+    // 关联附件-栏目图片icon
+    if (isNotEmptyObject(imgIcon)) {
+      const attachement = new Attachement();
+      const { id, url, size, mimetype } = imgIcon;
+
+      if (id) {
+        attachement.id = id;
+        const oldIcon = await this.attachementService.findOne(id);
+        if (oldIcon.url !== url) {
+          await this.attachementService.removeFile(id);
+        }
+      }
+
+      attachement.url = url;
+      attachement.size = size;
+      attachement.mimetype = mimetype;
+      attachement.operatorType = 1;
+
+      const manager = new Manager();
+      manager.id = managerId;
+      attachement.operator = manager;
+
+      data.imgIcon = attachement;
     }
 
     // parent
@@ -242,10 +288,33 @@ export class CategoryService {
     });
   }
 
-  findByCatnameEn(catnameEn: string) {
+  /**
+   * 根据栏目目录获取栏目信息
+   * @param catdir string 栏目目录
+   * @returns Object
+   */
+  findOneByCatdir(catdir: string, relations: string[]) {
     return this.category.findOne({
-      where: { catnameEn },
-      relations: ['parent', 'documents', 'children', 'cover'],
+      where: { catdir },
+      relations,
     });
+  }
+
+  filterTreeByDisplay(nodes) {
+    return nodes
+      .flatMap((node) => {
+        if (node.display === 1) {
+          // 递归处理子节点，然后将当前节点与过滤后的子节点合并
+          const filteredChildren = this.filterTreeByDisplay(
+            node.children || [],
+          );
+          // 返回当前节点与子节点数组的组合
+          return [{ ...node, children: filteredChildren }];
+        } else {
+          // 如果当前节点不需要保留，则检查是否有子节点需要处理
+          return node.children ? this.filterTreeByDisplay(node.children) : [];
+        }
+      })
+      .filter(Boolean);
   }
 }
