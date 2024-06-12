@@ -1,4 +1,4 @@
-import { CommonEntity } from '@app/modules/common-entity';
+import { CommonEntity } from '../../common-entity';
 import { Document } from '@app/modules/document/entities/document.entity';
 import {
   BeforeInsert,

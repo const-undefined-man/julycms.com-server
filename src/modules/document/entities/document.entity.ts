@@ -9,7 +9,7 @@ import {
   OneToOne,
 } from 'typeorm';
 import { Category } from '@app/modules/category/entities/category.entity';
-import { CommonEntity } from '@app/modules/common-entity';
+import { CommonEntity } from '../../common-entity';
 import { Tag } from '@app/modules/tag/entities/tag.entity';
 import { Attachement } from '@app/modules/attachement/entities/attachement.entity';
 import { Content } from './content.entity';

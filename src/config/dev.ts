@@ -1,3 +1,4 @@
+import entities from '../modules/entities';
 export default {
   // 服务监听端口
   port: parseInt(process.env.PORT, 10) || 3000,
@@ -22,16 +23,19 @@ export default {
     password: '123123123',
     database: 'julyCms',
     entityPrefix: 'july_',
-    synchronize: true,
+    synchronize: false,
     logging: false,
     timezone: 'local',
     autoLoadEntities: true,
+    entities: entities,
     maxQueryExecutionTime: 1500,
     connectorPackage: 'mysql2',
-    migrations: ['migration/**.ts'],
+    migrations: ['./src/migration/**.ts'],
     cli: {
-      migrationsDir: 'migration',
+      migrationsDir: './src/migration',
     },
+    subscribers: [],
+    poolSize: 10,
   },
   // redis
   redis: {

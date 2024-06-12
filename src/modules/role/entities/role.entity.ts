@@ -1,6 +1,6 @@
 import { Entity, Column, ManyToMany, JoinTable } from 'typeorm';
 import { Manager } from '@app/modules/manager/entities/manager.entity';
-import { CommonEntity } from '@app/modules/common-entity';
+import { CommonEntity } from '../../common-entity';
 import { Menu } from '@app/modules/menu/entities/menu.entity';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 

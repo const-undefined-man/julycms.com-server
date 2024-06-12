@@ -1,5 +1,5 @@
 import { Attachement } from '@app/modules/attachement/entities/attachement.entity';
-import { CommonEntity } from '@app/modules/common-entity';
+import { CommonEntity } from '../../common-entity';
 import { Patch } from '@app/modules/patch/entities/patch.entity';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm';

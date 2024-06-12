@@ -1,4 +1,4 @@
-import { CommonEntity } from '@app/modules/common-entity';
+import { CommonEntity } from '../../common-entity';
 import { Column, Entity, OneToOne } from 'typeorm';
 import { Document } from './document.entity';
 

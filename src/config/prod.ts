@@ -28,10 +28,12 @@ export default {
     autoLoadEntities: true,
     maxQueryExecutionTime: 1500,
     connectorPackage: 'mysql2',
-    migrations: ['migration/**.ts'],
+    migrations: ['./src/migration/**.ts'],
     cli: {
       migrationsDir: 'migration',
     },
+    subscribers: [],
+    poolSize: 10,
   },
   // redis
   redis: {

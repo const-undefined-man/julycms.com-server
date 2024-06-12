@@ -1,4 +1,4 @@
-import { CommonEntity } from '@app/modules/common-entity';
+import { CommonEntity } from '../../common-entity';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Column, Entity } from 'typeorm';
 

@@ -1,4 +1,4 @@
-import { CommonEntity } from '@app/modules/common-entity';
+import { CommonEntity } from '../../common-entity';
 import { Role } from '@app/modules/role/entities/role.entity';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import {
