@@ -1,4 +1,3 @@
-import entities from '../modules/entities';
 export default {
   // 服务监听端口
   port: parseInt(process.env.PORT, 10) || 3000,
@@ -27,13 +26,9 @@ export default {
     logging: false,
     timezone: 'local',
     autoLoadEntities: true,
-    entities: entities,
     maxQueryExecutionTime: 1500,
     connectorPackage: 'mysql2',
-    migrations: ['./src/migration/**.ts'],
-    cli: {
-      migrationsDir: './src/migration',
-    },
+    migrations: [],
     subscribers: [],
     poolSize: 10,
   },

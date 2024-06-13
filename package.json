@@ -17,10 +17,10 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "migration:create": "npx typeorm-ts-node-commonjs migration:create ./src/migration/init",
-    "migration:generate": "npx typeorm-ts-node-commonjs migration:generate ./src/migration/init -d ./src/common/database/datasource.ts",
-    "migration:run": "npx typeorm-ts-node-commonjs migration:run -d ./src/common/database/datasource.ts",
-    "migration:revert": "npx typeorm-ts-node-commonjs migration:revert -d ./src/common/database/datasource.ts"
+    "migration:create": "npx typeorm-ts-node-commonjs migration:create ./migration/init",
+    "migration:generate": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:generate ./migration/init -d ./src/common/database/datasource.ts",
+    "migration:run": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d ./src/common/database/datasource.ts",
+    "migration:revert": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:revert -d ./src/common/database/datasource.ts"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",

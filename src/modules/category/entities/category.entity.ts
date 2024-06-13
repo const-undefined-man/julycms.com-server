@@ -1,5 +1,5 @@
 import { Attachement } from '@app/modules/attachement/entities/attachement.entity';
-import { CommonEntity } from '../../common-entity';
+import { CommonEntity } from '@app/modules/common-entity';
 import { Document } from '@app/modules/document/entities/document.entity';
 import { SiteModel } from '@app/modules/site-model/entities/site-model.entity';
 import { ApiPropertyOptional } from '@nestjs/swagger';

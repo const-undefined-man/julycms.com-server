@@ -28,10 +28,7 @@ export default {
     autoLoadEntities: true,
     maxQueryExecutionTime: 1500,
     connectorPackage: 'mysql2',
-    migrations: ['./src/migration/**.ts'],
-    cli: {
-      migrationsDir: 'migration',
-    },
+    migrations: [],
     subscribers: [],
     poolSize: 10,
   },

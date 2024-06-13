@@ -1,4 +1,4 @@
-import { CommonEntity } from '../../common-entity';
+import { CommonEntity } from '@app/modules/common-entity';
 import { DictValue } from '@app/modules/dict-value/entities/dict-value.entity';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Column, Entity, OneToMany } from 'typeorm';

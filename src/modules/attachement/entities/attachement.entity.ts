@@ -4,7 +4,7 @@ import { Document } from '@app/modules/document/entities/document.entity';
 import { Column, Entity, ManyToOne, OneToOne } from 'typeorm';
 import { Album } from '@app/modules/document/entities/album.entity';
 import { PatchList } from '@app/modules/patch/entities/patch-list.entity';
-import { CommonEntity } from '../../common-entity';
+import { CommonEntity } from '@app/modules/common-entity';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 
 @Entity('attachement', { orderBy: { id: 'DESC' } })

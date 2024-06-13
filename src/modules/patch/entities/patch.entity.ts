@@ -1,4 +1,4 @@
-import { CommonEntity } from '../../common-entity';
+import { CommonEntity } from '@app/modules/common-entity';
 import { Manager } from '@app/modules/manager/entities/manager.entity';
 import { PatchList } from '@app/modules/patch/entities/patch-list.entity';
 import { PatchText } from '@app/modules/patch/entities/patch-text.entity';

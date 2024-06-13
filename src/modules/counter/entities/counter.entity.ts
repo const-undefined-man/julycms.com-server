@@ -1,4 +1,4 @@
-import { CommonEntity } from '../../common-entity';
+import { CommonEntity } from '@app/modules/common-entity';
 import { Column, Entity, ManyToOne } from 'typeorm';
 import { countTypeEnum } from '../type';
 import { Document } from '@app/modules/document/entities/document.entity';
