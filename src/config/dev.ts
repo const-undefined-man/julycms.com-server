@@ -22,16 +22,15 @@ export default {
     password: '123123123',
     database: 'julyCms',
     entityPrefix: 'july_',
-    synchronize: true,
+    synchronize: false,
     logging: false,
     timezone: 'local',
     autoLoadEntities: true,
     maxQueryExecutionTime: 1500,
     connectorPackage: 'mysql2',
-    migrations: ['migration/**.ts'],
-    cli: {
-      migrationsDir: 'migration',
-    },
+    migrations: [],
+    subscribers: [],
+    poolSize: 10,
   },
   // redis
   redis: {
