@@ -26,7 +26,7 @@ export class AuthService {
   }
 
   async validateUser(loginAuthDto: LoginAuthDto, loggerInfo): Promise<any> {
-    const { username, password, code } = loginAuthDto;
+    const { username, password, code, codeId } = loginAuthDto;
 
     // 登录次数的key
     const LoginUserKey = RedisKeys.LOGIN_NUMBER + ':' + username;
@@ -44,7 +44,7 @@ export class AuthService {
     }
 
     // 验证码
-    const loginCode = await this.redis.get(RedisKeys.LOGIN_CODE);
+    const loginCode = await this.redis.get(RedisKeys.LOGIN_CODE + ':' + codeId);
 
     loggerInfo.username = username;
 

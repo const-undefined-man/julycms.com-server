@@ -29,8 +29,9 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
 
     const loggerInfo = request.loggerInfo;
 
+    const session = request.session;
     const user = await authService.validateUser(
-      { username, password, code: body.code },
+      { username, password, code: body.code, codeId: session['codeId'] },
       loggerInfo,
     );
     if (!user) {

@@ -14,4 +14,6 @@ export class LoginAuthDto {
   @IsNotEmpty({ message: '验证码不能为空' })
   @Length(4, 4, { message: '验证码为4个字符' })
   code: string;
+
+  codeId: string;
 }

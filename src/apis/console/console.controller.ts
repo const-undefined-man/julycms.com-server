@@ -6,6 +6,7 @@ import {
   Req,
   Inject,
   SetMetadata,
+  Session,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ConsoleService } from './console.service';
@@ -26,8 +27,9 @@ export class ConsoleController {
   @ApiOperation({ summary: '获取验证码' })
   @Public()
   @Get('auth/code')
-  captcha() {
-    return this.consoleService.createCaptch();
+  captcha(@Session() session) {
+    session.codeId = session.codeId ? session.codeId : session.id;
+    return this.consoleService.createCaptch(session.codeId);
   }
 
   @ApiOperation({ summary: '登录' })

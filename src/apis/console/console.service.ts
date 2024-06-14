@@ -28,7 +28,7 @@ export class ConsoleService {
   @Inject('REDIS')
   private readonly redis: Redis;
 
-  async createCaptch() {
+  async createCaptch(codeId: string) {
     const { text, data } = create({
       width: 120,
       height: 36,
@@ -36,7 +36,7 @@ export class ConsoleService {
       ignoreChars: 'i1l0oaqg',
     });
 
-    this.redis.set(RedisKeys.LOGIN_CODE, text, 'EX', 60 * 5); // 5分钟过期
+    this.redis.set(RedisKeys.LOGIN_CODE + ':' + codeId, text, 'EX', 60 * 1); // 1分钟过期
 
     return data;
   }

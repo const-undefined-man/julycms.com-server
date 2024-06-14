@@ -1,6 +1,7 @@
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { Request } from 'express';
 import helmet from 'helmet';
+import * as session from 'express-session';
 import { join } from 'path';
 import { mw as requestIpMw } from 'request-ip';
 import { ResponseInterceptor, HttpFilter } from './';
@@ -49,6 +50,16 @@ export const commonBootstrap = (app) => {
       crossOriginOpenerPolicy: { policy: 'same-origin-allow-popups' },
       // 静态资源保护
       crossOriginResourcePolicy: false,
+    }),
+  );
+
+  // session
+  app.use(
+    session({
+      secret: 'julycms-secret',
+      resave: false,
+      saveUninitialized: false,
+      cookie: { secure: false },
     }),
   );
 
