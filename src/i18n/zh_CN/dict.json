@@ -1,0 +1,10 @@
+{
+  "nameIsNotEmpty": "字典名称不能为空",
+  "nameLength": "字典名称为1~16位字符",
+  "typeIsNotEmpty": "字典标识不能为空",
+  "typeIsLetter": "字典标识只能是字母",
+  "typeLength": "字典标识为1~16位字符",
+  "displayIsNumber": "显示状态只能是数字",
+  "remarkLength": "字典备注最大为255位字符",
+  "valueIsArray": "字典值为数组"
+}

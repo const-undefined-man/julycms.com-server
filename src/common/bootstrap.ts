@@ -7,6 +7,7 @@ import { mw as requestIpMw } from 'request-ip';
 import { ResponseInterceptor, HttpFilter } from './';
 import { WINSTON_LOGGER } from './winston/winston.module';
 import { OperationLogInterceptor } from './interceptors/operation-log.interceptor';
+import { I18nValidationPipe } from 'nestjs-i18n';
 
 declare const module: any;
 
@@ -42,7 +43,7 @@ export const commonBootstrap = (app) => {
   app.useGlobalFilters(new HttpFilter());
 
   // 启动全局字段校验，保证请求接口字段校验正确。
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe(), new I18nValidationPipe());
 
   // 常见Web 漏洞防护
   app.use(

@@ -1,0 +1,10 @@
+{
+  "nameIsNotEmpty": "The dictionary name cannot be empty",
+  "nameLength": "The dictionary name should be 1 - 16 characters",
+  "typeIsNotEmpty": "The dictionary identifier cannot be empty",
+  "typeIsLetter": "The dictionary identifier can only be letters",
+  "typeLength": "The dictionary identifier should be 1 - 16 characters",
+  "displayIsNumber": "The display status can only be numbers",
+  "remarkLength": "The dictionary remarks can be up to 255 characters at most",
+  "valueIsArray": "The dictionary value is an array"
+}

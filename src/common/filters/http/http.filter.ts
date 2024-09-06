@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import { BusinessException } from './business.exception';
 import { QueryFailedError } from 'typeorm';
+import { I18nContext } from 'nestjs-i18n';
 
 @Catch(HttpException)
 export class HttpFilter implements ExceptionFilter {
@@ -16,6 +17,7 @@ export class HttpFilter implements ExceptionFilter {
     const response = ctx.getResponse();
     const status = exception.getStatus();
     const error = exception.getResponse();
+    const i18n = I18nContext.current(host);
 
     // 数据操作拦截
     if (exception.constructor === QueryFailedError) {
@@ -32,7 +34,7 @@ export class HttpFilter implements ExceptionFilter {
       response.status(HttpStatus.OK).send({
         data: null,
         code: error['code'],
-        message: error['message'],
+        message: i18n.t(error['message']),
       });
       return;
     }
@@ -43,7 +45,7 @@ export class HttpFilter implements ExceptionFilter {
         data: null,
         code: status,
         message: Array.isArray(error['message'])
-          ? error['message'][0]
+          ? i18n.t(error['message'][0])
           : '请求错误',
       });
       return;

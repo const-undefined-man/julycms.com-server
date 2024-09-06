@@ -6,6 +6,8 @@ import { DatabaseModule, WinstonModule, RedisModule } from './common';
 import CommonModules from './modules';
 import { ConsoleModule } from './apis/console/console.module';
 import { PcModule } from './apis/pc/pc.module';
+import { HeaderResolver, I18nModule } from 'nestjs-i18n';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -34,6 +36,16 @@ import { PcModule } from './apis/pc/pc.module';
     ]),
     WinstonModule.forRoot(),
     RedisModule,
+    I18nModule.forRoot({
+      fallbackLanguage: 'zh_CN',
+      loaderOptions: {
+        path: join(__dirname, '/i18n/'),
+        watch: true,
+      },
+      resolvers: [
+        new HeaderResolver(['x-lang']),
+      ],
+    }),
 
     ...CommonModules,
 

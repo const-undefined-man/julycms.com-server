@@ -12,8 +12,8 @@ import {
 
 export class CreateDictDto {
   @ApiProperty({ description: '字典名称', example: '性别' })
-  @IsNotEmpty({ message: '字典名称不能为空' })
-  @Length(1, 16, { message: '字典名称为1~16位字符' })
+  @IsNotEmpty({ message: 'dict.nameIsNotEmpty' })
+  @Length(10, 16, { message: 'dict.nameLength' })
   name: string;
 
   @ApiProperty({ description: '字典标识', example: 'gender' })

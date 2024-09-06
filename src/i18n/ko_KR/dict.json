@@ -1,0 +1,10 @@
+{
+  "nameIsNotEmpty": "사전 이름을 비워둘 수 없습니다",
+  "nameLength": "사전 이름은 1~16자 문자입니다",
+  "typeIsNotEmpty": "사전 식별자는 비워둘 수 없습니다",
+  "typeIsLetter": "사전 식별자는 문자만 가능합니다",
+  "typeLength": "사전 식별자는 1~16자 문자입니다",
+  "displayIsNumber": "표시 상태는 숫자만 가능합니다",
+  "remarkLength": "사전 메모는 최대 255자 문자입니다",
+  "valueIsArray": "사전 값은 배열입니다"
+}
