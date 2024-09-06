@@ -60,7 +60,7 @@ export class DocumentController {
   @ApiQuery({
     name: 'title',
     required: false,
-    description: '每页显示数',
+    description: '标题',
     type: String,
     example: '标题',
   })

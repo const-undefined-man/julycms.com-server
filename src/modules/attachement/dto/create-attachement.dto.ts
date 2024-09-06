@@ -5,7 +5,7 @@ export class CreateAttachementDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsNumber(undefined, { message: 'id为数字' })
-  id: number;
+  id?: number;
 
   @ApiProperty()
   @IsNotEmpty({ message: 'url不能为空' })
@@ -15,12 +15,12 @@ export class CreateAttachementDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsNumber(undefined, { message: 'size为数字' })
-  size: number;
+  size?: number;
 
   @ApiPropertyOptional()
   @IsOptional()
   @MaxLength(255, { message: 'mimetype长度最大为255个字符' })
-  mimetype: string;
+  mimetype?: string;
 
   @ApiProperty()
   @IsNumber(undefined, { message: '操作人类型为数字' })
@@ -28,5 +28,5 @@ export class CreateAttachementDto {
 
   @ApiPropertyOptional()
   @IsOptional()
-  manager: Manager;
+  manager?: Manager;
 }

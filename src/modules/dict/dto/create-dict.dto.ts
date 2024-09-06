@@ -25,15 +25,15 @@ export class CreateDictDto {
   @ApiPropertyOptional({ description: '是否显示；0 隐藏；1 显示', example: 1 })
   @IsNumber(undefined, { message: '显示状态只能是数字' })
   @IsOptional()
-  display: number;
+  display?: number;
 
   @ApiPropertyOptional({ description: '字典备注' })
   @MaxLength(255, { message: '字典备注最大为255位字符' })
   @IsOptional()
-  remark: string;
+  remark?: string;
 
   @ApiPropertyOptional({ description: '字典值', example: '' })
   @IsOptional()
   @IsArray({ message: '字典值为数组' })
-  values: DictValue[];
+  values?: DictValue[];
 }

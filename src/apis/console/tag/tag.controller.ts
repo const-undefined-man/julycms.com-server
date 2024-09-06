@@ -55,14 +55,22 @@ export class TagController {
     type: Number,
     example: 10,
   })
+  @ApiQuery({
+    name: 'title',
+    required: false,
+    description: '标题',
+    type: String,
+    example: '标题',
+  })
   @SetMetadata(ReflectMetadataKeys.ACTION_NAME, '列表')
   @Get()
   @VerifyPermission('content:tag:query')
   findAll(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit = 10,
+    @Query('name') name: string,
   ) {
-    return this.tagService.findAll({ page, limit });
+    return this.tagService.findAll({ page, limit }, {name});
   }
 
   @ApiOperation({ summary: '详细' })

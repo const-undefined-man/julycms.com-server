@@ -157,6 +157,9 @@ export class PatchService {
       where: {
         patch: { id },
       },
+      order: {
+        listorder: 1,
+      },
       relations: ['img'],
     });
   }
@@ -239,7 +242,7 @@ export class PatchService {
       return await this.patch.manager.transaction(async (manager) => {
         await manager.delete(PatchList, id);
         if (res.img) {
-          const filePath = path.join(process.cwd(), res.img.url);
+          const filePath = path.join(__dirname, res.img.url);
           if (existsSync(filePath)) {
             unlinkSync(filePath);
           }

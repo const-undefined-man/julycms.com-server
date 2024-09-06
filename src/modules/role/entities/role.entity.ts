@@ -21,7 +21,7 @@ export class Role extends CommonEntity {
     width: 1,
     comment: '启用状态, 0 禁用；1 启用',
   })
-  status: number;
+  display: number;
 
   @ApiPropertyOptional({ description: '角色拥有的管理员', type: [Manager] })
   @ManyToMany(() => Manager, (manager) => manager.roles)

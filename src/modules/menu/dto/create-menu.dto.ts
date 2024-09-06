@@ -1,5 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
+  IsJSON,
   IsNotEmpty,
   IsNumber,
   IsOptional,
@@ -29,7 +30,7 @@ export class CreateMenuDto {
   @IsOptional()
   @IsNotEmpty({ message: '标识不能为空' })
   @Length(1, 32, { message: '标识为1~32位字符' })
-  mark: string;
+  mark?: string;
 
   @ApiPropertyOptional({
     description: '菜单图标',
@@ -53,7 +54,7 @@ export class CreateMenuDto {
   })
   @IsOptional()
   @MaxLength(128, { message: '路由地址最大为128个字符' })
-  componentRoute: string;
+  componentRoute?: string;
 
   @ApiPropertyOptional({
     description: '组件路径',
@@ -61,14 +62,14 @@ export class CreateMenuDto {
   })
   @IsOptional()
   @MaxLength(128, { message: '组件路径最大为128个字符' })
-  componentPath: string;
+  componentPath?: string;
 
   @ApiPropertyOptional({
     description: '排序',
     example: 1,
   })
   @IsOptional()
-  listorder: number;
+  listorder?: number;
 
   @ApiPropertyOptional({
     description: '是否显示；0 隐藏；1 显示',
@@ -78,12 +79,16 @@ export class CreateMenuDto {
     enum: [0, 1],
   })
   @IsOptional()
-  display: number;
+  display?: number;
 
   @ApiPropertyOptional({ description: '按钮/菜单风格', example: 'primary' })
   @IsOptional()
   @Length(0, 16, { message: '风格最大为16个字符' })
-  style: string;
+  style?: string;
+
+  @ApiProperty({ description: '菜单语言', example: '{en_US: "Menu"}' })
+  @IsJSON()
+  langs: string;
 
   @ApiPropertyOptional({
     description: '父级菜单',
@@ -91,5 +96,5 @@ export class CreateMenuDto {
   })
   @IsOptional()
   @IsNumber(undefined, { message: '父级菜单为数字' })
-  parent: number;
+  parent?: number;
 }

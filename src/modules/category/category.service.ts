@@ -104,7 +104,7 @@ export class CategoryService {
   findOne(id: number) {
     return this.category.findOne({
       where: { id },
-      relations: ['cover', 'siteModel', 'parent'],
+      relations: ['cover', 'siteModel', 'parent', 'imgIcon'],
     });
   }
 

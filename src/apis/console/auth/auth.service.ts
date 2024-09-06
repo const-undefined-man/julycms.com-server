@@ -87,14 +87,13 @@ export class AuthService {
     return {
       username: manager.username,
       id: manager.id,
-      roles: manager.roles,
+      roles: manager.roles.map((v) => v.id),
       isAdmin: manager.isAdmin,
     };
   }
 
   async login(user: any) {
     const payload = {
-      username: user.username,
       userId: user.id,
       roles: user.roles,
       isAdmin: user.isAdmin,
@@ -105,6 +104,8 @@ export class AuthService {
 
     return {
       userId: user.id,
+      isAdmin: user.isAdmin,
+      name: user.username,
       access_token,
     };
   }

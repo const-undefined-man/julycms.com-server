@@ -19,9 +19,9 @@ export class CreateManagerDto {
   @IsNotEmpty({ message: '密码不能为空' })
   password: string;
 
-  @ApiPropertyOptional({ description: '附件-头像' })
+  @ApiPropertyOptional({ description: '头像-附件ID' })
   @IsOptional()
-  attachement: Attachement;
+  avatar?: Attachement;
 
   @ApiPropertyOptional({ description: '真实姓名', example: '保密' })
   @IsOptional()
@@ -45,5 +45,5 @@ export class CreateManagerDto {
   @ApiPropertyOptional({ description: '关联的角色', example: [{ id: 1 }] })
   @IsOptional({ message: '关联的角色不能为空' })
   @IsArray({ message: '关联的角色格式错误' })
-  roles: Role[];
+  roles?: Role[];
 }

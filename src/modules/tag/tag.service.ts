@@ -3,7 +3,7 @@ import { CreateTagDto } from './dto/create-tag.dto';
 import { UpdateTagDto } from './dto/update-tag.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Tag } from './entities/tag.entity';
-import { Repository } from 'typeorm';
+import { Like, Or, Repository } from 'typeorm';
 import { IPaginationOptions, paginate } from 'nestjs-typeorm-paginate';
 import { BusinessException } from '@app/common';
 
@@ -26,8 +26,15 @@ export class TagService {
     return this.tag.save(data);
   }
 
-  findAll(options: IPaginationOptions) {
-    return paginate(this.tag, options);
+  findAll(options: IPaginationOptions, wheres) {
+    let where: any = [];
+    if (wheres.name) {
+      where = [
+        { name: Like(`%${wheres.name}%`) },
+        { pinyin: Like(`%${wheres.name}%`) }
+      ]
+    }
+    return paginate(this.tag, options, {where});
   }
 
   findOne(id: number) {
@@ -85,5 +92,23 @@ export class TagService {
 
   count() {
     return this.tag.count();
+  }
+
+  async countHot(): Promise<{ tag: Tag; count: number, range: number }[]> {
+    const queryBuilder = this.tag.createQueryBuilder('tag');
+    const result = await queryBuilder.leftJoinAndSelect('tag.documents', 'document')
+      .groupBy('tag.id')
+      .addOrderBy('COUNT(document.id)', 'DESC')
+      .select(['tag', 'COUNT(document.id) AS documentCount'])
+      .limit(7)
+      .getRawMany();
+
+    let max = result[0].documentCount;
+
+    return result.map(row => ({
+      tag: row.tag_name,
+      count: row.documentCount,
+      range: +(row.documentCount/max*100).toFixed(0)
+    }));
   }
 }

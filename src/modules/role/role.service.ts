@@ -23,7 +23,7 @@ export class RoleService {
 
     // 角色数据
     const role = new Role();
-    ['name', 'description', 'status'].forEach((v) => {
+    ['name', 'description', 'display'].forEach((v) => {
       role[v] = createRoleDto[v];
     });
 
@@ -68,7 +68,7 @@ export class RoleService {
 
   update(updateRoleDto: UpdateRoleDto) {
     const role = new Role();
-    ['id', 'name', 'description', 'status'].forEach((v) => {
+    ['id', 'name', 'description', 'display'].forEach((v) => {
       role[v] = updateRoleDto[v];
     });
 
@@ -89,7 +89,7 @@ export class RoleService {
     return this.role.delete(id);
   }
 
-  status(id: number, status: number) {
-    return this.role.update(id, { status });
+  status(id: number, display: number) {
+    return this.role.update(id, { display });
   }
 }

@@ -20,7 +20,7 @@ export class ManagerService {
     private readonly attachementService: AttachementService,
   ) {}
 
-  async create(createManagerDto: CreateManagerDto, managerId: number) {
+  async create(createManagerDto: CreateManagerDto) {
     // 先检查是否存在
     const isHas = await this.findOneByUsername(createManagerDto.username);
     if (isHas) {
@@ -43,20 +43,9 @@ export class ManagerService {
     });
 
     // 关联附件-头像
-    if (isNotEmptyObject(createManagerDto.attachement)) {
-      const { url, size, mimetype } = createManagerDto.attachement;
-      if (!url) {
-        return;
-      }
+    if (isNotEmptyObject(createManagerDto.avatar)) {
       const attachement = new Attachement();
-      attachement.url = url;
-      attachement.size = size;
-      attachement.mimetype = mimetype;
-      attachement.operatorType = 1;
-
-      const operator = new Manager();
-      operator.id = managerId;
-      attachement.operator = operator;
+      attachement.id = createManagerDto.avatar.id;
 
       manager.avatar = attachement;
     }
@@ -95,7 +84,7 @@ export class ManagerService {
     });
   }
 
-  async update(updateManagerDto: UpdateManagerDto, managerId: number) {
+  async update(updateManagerDto: UpdateManagerDto) {
     // 管理员信息
     const manager = new Manager();
     ['id', 'realname', 'email', 'phoneNumber', 'lastLoginIp'].forEach((v) => {
@@ -103,27 +92,11 @@ export class ManagerService {
     });
 
     // 关联附件-头像
-    if (isNotEmptyObject(updateManagerDto.attachement)) {
-      const { id, url, size, mimetype } = updateManagerDto.attachement;
+    if (isNotEmptyObject(updateManagerDto.avatar)) {
+      const attachement = new Attachement();
+      attachement.id = updateManagerDto.avatar.id;
 
-      if (id) {
-        // 如果ID存在，说明是修改；先删除之前的附件，再保存新的附件
-        await this.attachementService.removeFile(id);
-      }
-      if (url) {
-        const attachement = new Attachement();
-        attachement.id = id;
-        attachement.url = url;
-        attachement.size = size;
-        attachement.mimetype = mimetype;
-        attachement.operatorType = 1;
-
-        const operator = new Manager();
-        operator.id = managerId;
-        attachement.operator = operator;
-
-        manager.avatar = attachement;
-      }
+      manager.avatar = attachement;
     }
 
     // 关联角色
@@ -141,7 +114,9 @@ export class ManagerService {
   async remove(id: number) {
     const manager = await this.findOne(id);
 
-    await this.attachementService.remove(manager.avatar.id);
+    if (manager.avatar) {
+      await this.attachementService.remove(manager.avatar.id);
+    }
 
     return this.manager.remove(manager);
   }

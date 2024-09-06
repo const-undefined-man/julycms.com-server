@@ -26,7 +26,7 @@ export class MenuService {
       'componentPath',
       'listorder',
       'display',
-      'style',
+      'langs',
     ].forEach((v) => {
       if (createMenuDto[v]) {
         menu[v] = createMenuDto[v];
@@ -39,11 +39,11 @@ export class MenuService {
       parent.id = createMenuDto.parent;
       menu.parent = parent;
 
-      // 重制 componentPath; 如果父级菜单和当前添加菜单都是目录，则componentPath为LayPage
+      // 重制 componentPath; 如果父级菜单和当前添加菜单都是目录，则componentPath为Blank
       const menuOne = await this.findOne(createMenuDto.parent);
       menu.componentPath =
         createMenuDto.type == 0 && menuOne.type === 0
-          ? 'LayPage'
+          ? 'Blank'
           : createMenuDto.componentPath;
     }
 
@@ -71,8 +71,7 @@ export class MenuService {
     });
   }
 
-  async findPermissionMenuTree(roles) {
-    const roleIds = roles.map((v) => v.id);
+  async findPermissionMenuTree(roleIds: number[]) {
     const userRoles = await this.roleService.findByIds(roleIds);
     const roleMenus: Menu[] = userRoles.reduce((total, current) => {
       total.push(...current.menus);
@@ -104,7 +103,7 @@ export class MenuService {
       'componentPath',
       'listorder',
       'display',
-      'style',
+      'langs',
     ].forEach((v) => {
       if (updateMenuDto[v]) {
         menu[v] = updateMenuDto[v];
@@ -117,11 +116,11 @@ export class MenuService {
       parent.id = updateMenuDto.parent;
       menu.parent = parent;
 
-      // 重制 componentPath; 如果父级菜单和当前添加菜单都是目录，则componentPath为LayPage
+      // 重制 componentPath; 如果父级菜单和当前添加菜单都是目录，则componentPath为Blank
       const menuOne = await this.findOne(updateMenuDto.parent);
       menu.componentPath =
         updateMenuDto.type == 0 && menuOne.type === 0
-          ? 'LayPage'
+          ? 'Blank'
           : updateMenuDto.componentPath;
     }
 
@@ -142,10 +141,6 @@ export class MenuService {
 
   display(id: number, display: number) {
     return this.menu.update(id, { display });
-  }
-
-  quickmenu(id: number, quickmenu: number) {
-    return this.menu.update(id, { quickmenu });
   }
 
   listorder(id: number, listorder: number) {

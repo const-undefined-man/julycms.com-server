@@ -10,27 +10,28 @@ export class CreatePatchListDto {
 
   @ApiPropertyOptional({ description: '碎片列表id', example: 1 })
   @IsOptional()
-  id: number;
+  id?: number;
 
   @ApiProperty({ example: '碎片标题', description: '碎片标题' })
   @IsNotEmpty({ message: '碎片标题不能为空' })
+  @MaxLength(32, { message: '描述最大为32个字符' })
   title: string;
 
   @ApiPropertyOptional({ example: '碎片描述', description: '碎片描述' })
   @IsOptional()
   @MaxLength(255, { message: '碎片描述最大为255个字符' })
-  description: string;
+  description?: string;
 
   @ApiPropertyOptional({ example: '碎片图片', description: '碎片图片' })
   @IsOptional()
-  img: Attachement;
+  img?: Attachement;
 
   @ApiPropertyOptional({ example: '碎片链接', description: '碎片链接' })
   @IsOptional()
   @MaxLength(255, { message: '碎片链接最大为255个字符' })
-  url: string;
+  url?: string;
 
   @ApiPropertyOptional({ example: 99, description: '碎片排序' })
   @IsOptional()
-  listorder: number;
+  listorder?: number;
 }

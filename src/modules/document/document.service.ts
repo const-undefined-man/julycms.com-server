@@ -57,6 +57,7 @@ export class DocumentService {
     if (isNotEmptyObject(createDocumentDto.cover)) {
       const { url, size, mimetype } = createDocumentDto.cover;
       if (url) {
+        // TODO: 附件逻辑优化
         const attachement = new Attachement();
         attachement.url = url;
         attachement.size = size;
@@ -76,7 +77,7 @@ export class DocumentService {
       const tags = [];
       createDocumentDto.tags.forEach((v) => {
         const tag = new Tag();
-        tag.id = v.id;
+        tag.id = v;
 
         tags.push(tag);
       });
@@ -261,7 +262,7 @@ export class DocumentService {
     if (updateDocumentDto.tags) {
       updateDocumentDto.tags.forEach((v) => {
         const tag = new Tag();
-        tag.id = v.id;
+        tag.id = v;
 
         tags.push(tag);
       });

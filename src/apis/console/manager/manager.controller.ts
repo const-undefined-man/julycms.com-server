@@ -9,7 +9,6 @@ import {
   ParseIntPipe,
   Query,
   DefaultValuePipe,
-  Req,
   SetMetadata,
 } from '@nestjs/common';
 import { ManagerService } from '@app/modules/manager/manager.service';
@@ -37,8 +36,8 @@ export class ManagerController {
   @SetMetadata(ReflectMetadataKeys.ACTION_NAME, '创建')
   @Post()
   @VerifyPermission('system:manager:create')
-  create(@Body() createManagerDto: CreateManagerDto, @Req() req) {
-    return this.managerService.create(createManagerDto, req.user.userId);
+  create(@Body() createManagerDto: CreateManagerDto) {
+    return this.managerService.create(createManagerDto);
   }
 
   @ApiOperation({ summary: '列表' })
@@ -90,8 +89,8 @@ export class ManagerController {
   @SetMetadata(ReflectMetadataKeys.ACTION_NAME, '修改')
   @Patch()
   @VerifyPermission('system:manager:update')
-  update(@Body() updateManagerDto: UpdateManagerDto, @Req() req) {
-    return this.managerService.update(updateManagerDto, req.user.userId);
+  update(@Body() updateManagerDto: UpdateManagerDto) {
+    return this.managerService.update(updateManagerDto);
   }
 
   @ApiOperation({ summary: '删除' })

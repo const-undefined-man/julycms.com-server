@@ -13,6 +13,7 @@ import {
   Query,
   DefaultValuePipe,
   SetMetadata,
+  Req,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ApiBearerAuth, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -38,7 +39,7 @@ export class AttachementController {
   @SetMetadata(ReflectMetadataKeys.ACTION_NAME, '上传')
   @Post('upload')
   @UseInterceptors(FilesInterceptor('file', 5, { storage }))
-  upload(
+  async upload(
     @UploadedFiles(
       new ParseFilePipe({
         validators: [
@@ -48,11 +49,27 @@ export class AttachementController {
       }),
     )
     files: Array<Express.Multer.File>,
+    @Req() req,
   ) {
-    // console.log(files);
-    // console.log(process.cwd());
-    const list = files.map((v) => {
-      return v.path.replace(__dirname, '');
+    const attachements = [];
+    files.forEach((v) => {
+      const url = v.path.replace(__dirname, '');
+      const attachement = new Attachement();
+      attachement.url = url;
+      attachement.size = v.size;
+      attachement.mimetype = v.mimetype;
+      attachement.operatorType = 1;
+
+      attachements.push(attachement);
+    });
+
+    const res = await this.attachementService.save(
+      attachements,
+      req.user.userId,
+    );
+
+    const list = res.map((v) => {
+      return { id: v.id, url: v.url };
     });
 
     return list.length === 1 ? list[0] : list;

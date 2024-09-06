@@ -2,6 +2,7 @@ version: '3.8'
 services:
   console-ui:
     image: 20230709/julycms-console-ui:1.0.0
+    restart: always
     ports:
       - 82:80
     depends_on:
@@ -12,6 +13,7 @@ services:
     build:
       context: ./
       dockerfile: ./Dockerfile
+    restart: always
     ports:
       - '3000:3000'
     environment:
@@ -23,6 +25,7 @@ services:
       - julycms-network
   mysql-server:
     image: mysql
+    restart: always
     command: --init-file /docker-entrypoint-initdb.d/init.sql
     ports:
       - 3306:3306
@@ -37,6 +40,7 @@ services:
       - julycms-network
   redis-server:
     image: redis:alpine3.19
+    restart: always
     volumes:
       - /Users/sole/docker/redis:/data
     networks:

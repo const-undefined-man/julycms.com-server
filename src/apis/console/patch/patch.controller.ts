@@ -28,7 +28,7 @@ import { UpdatePatchTextDto } from '@app/modules/patch/dto/update-patch-text.dto
 import { CreatePatchListDto } from '@app/modules/patch/dto/create-patch-list.dto';
 import { UpdatePatchListDto } from '@app/modules/patch/dto/update-patch-list.dto';
 import { BatchDisplayDto } from '@app/modules/patch/dto/batch-display.dto';
-import { BatchRemoveDto } from '@app/modules/patch/dto/batch-remove.dto';
+import { BatchRemoveDto } from '@app/common/dto/batch-remove.dto';
 import { VerifyPermission, ReflectMetadataKeys } from '@app/common';
 import { Patch as PatchDto } from '@app/modules/patch/entities/patch.entity';
 import { PatchList } from '@app/modules/patch/entities/patch-list.entity';
@@ -126,7 +126,7 @@ export class PatchController {
   @ApiOperation({ summary: '批量删除' })
   @SetMetadata(ReflectMetadataKeys.ACTION_NAME, '批量删除')
   @ApiBody({ required: true, description: 'ids', type: BatchRemoveDto })
-  @Patch('displayDel')
+  @Patch('delete')
   @VerifyPermission('content:patch:batDelete')
   displayRemove(@Body('ids') ids: number[]) {
     return this.patchService.batchRemove(ids);

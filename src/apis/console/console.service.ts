@@ -45,6 +45,7 @@ export class ConsoleService {
     const documentTotal = await this.documentService.count();
     const categoryTotal = await this.categoryService.count();
     const tagTotal = await this.tagService.count();
+    const tagRank = await this.tagService.countHot();
     const attachementTotal = await this.attachementService.count();
 
     const clickCount = await this.counterService.countDocument();
@@ -63,6 +64,7 @@ export class ConsoleService {
       clickCount,
       categoryCount,
       hotArticle,
+      tagRank,
     };
   }
 }

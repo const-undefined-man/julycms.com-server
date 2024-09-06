@@ -25,5 +25,5 @@ export class CreateSiteSettingDto {
   @ApiPropertyOptional({ description: '值', example: 'julycms' })
   @MaxLength(255, { message: '值最大为255个字符' })
   @IsOptional()
-  value: string;
+  value?: string;
 }

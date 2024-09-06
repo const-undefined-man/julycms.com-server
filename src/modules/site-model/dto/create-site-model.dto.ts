@@ -15,10 +15,10 @@ export class CreateSiteModelDto {
   @ApiPropertyOptional({ description: '模型描述', example: '文章' })
   @Length(0, 255, { message: '模型描述最多255个字符' })
   @IsOptional()
-  description: string;
+  description?: string;
 
   @ApiPropertyOptional({ description: '是否显示；0 隐藏；1 显示', example: 1 })
   @IsNumber(undefined, { message: '显示状态只能是数字' })
   @IsOptional()
-  display: number;
+  display?: number;
 }

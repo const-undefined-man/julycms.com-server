@@ -18,12 +18,12 @@ export class CreateDictValueDto {
   @ApiPropertyOptional({ description: '是否显示；0 隐藏；1 显示', example: 1 })
   @IsNumber(undefined, { message: '显示状态只能是数字' })
   @IsOptional()
-  display: number | 1;
+  display?: number | 1;
 
   @ApiPropertyOptional({ description: '排序', example: 1 })
   @IsNumber(undefined, { message: '排序只能是数字' })
   @IsOptional()
-  listorder: number | 1;
+  listorder?: number | 1;
 
   @ApiProperty({ description: '所属字典', example: 1 })
   @IsNotEmpty({ message: '所属字典不能为空' })

@@ -7,8 +7,4 @@ export class UpdateManagerDto extends CreateManagerDto {
   @IsNotEmpty({ message: 'id不能为空' })
   @IsNumber(undefined, { message: 'id为数字' })
   id: number;
-
-  @ApiPropertyOptional({ description: '密码', example: 'admin' })
-  @IsOptional()
-  password: string;
 }

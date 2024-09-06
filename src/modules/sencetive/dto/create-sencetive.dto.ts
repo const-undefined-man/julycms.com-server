@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsNotEmpty, IsNumber, IsOptional, Max, Min } from 'class-validator';
 
 export class CreateSencetiveDto {
@@ -9,12 +9,12 @@ export class CreateSencetiveDto {
   @IsNotEmpty({ message: '敏感词不能为空' })
   word: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: '敏感词的替换词',
     example: '*',
   })
   @IsOptional({ message: '替换词不能为空' })
-  replaceWord: string;
+  replaceWord?: string;
 
   @IsNumber(undefined, { message: '分类不能为空' })
   @Min(0, { message: '分类最小为0' })

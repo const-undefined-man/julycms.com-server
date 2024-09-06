@@ -22,6 +22,13 @@ export class DictValueService {
       throw new BusinessException({ code: 0, message: '字典不存在' });
     }
 
+    const hasValue = await this.dictValue.findOne({
+      where: { label: createDictValueDto.label },
+    });
+    if (hasValue) {
+      throw new BusinessException({ code: 0, message: '字典已存在' });
+    }
+
     const dict = new Dict();
     dict.id = createDictValueDto.dict;
 
@@ -50,6 +57,13 @@ export class DictValueService {
 
     if (!hasData) {
       throw new BusinessException({ code: 0, message: '字典不存在' });
+    }
+
+    const hasValue = await this.dictValue.findOne({
+      where: { label: updateDictValueDto.label },
+    });
+    if (hasValue) {
+      throw new BusinessException({ code: 0, message: '字典已存在' });
     }
 
     const dict = new Dict();

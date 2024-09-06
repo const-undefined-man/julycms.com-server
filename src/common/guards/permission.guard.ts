@@ -15,8 +15,11 @@ import { Request } from 'express';
 declare module 'express' {
   interface Request {
     user: {
+      // TOOD: 暂未使用 用户名
       username: string;
-      roles: Role[];
+      // TOOD: 暂未使用 用户id
+      userid: number;
+      roles: number[];
       isAdmin: number;
     };
   }
@@ -40,13 +43,6 @@ export class PermissionGuard implements CanActivate {
       return true;
     }
 
-    const roleIds = request.user.roles.map((v) => v.id);
-    const roles = await this.roleService.findByIds(roleIds);
-    const menus: Menu[] = roles.reduce((total, current) => {
-      total.push(...current.menus);
-      return total;
-    }, []);
-
     // 获取控制器设置的meta权限
     const permissions = this.reflector.getAllAndOverride<string[]>(
       ReflectMetadataKeys.PERMISSION,
@@ -57,6 +53,18 @@ export class PermissionGuard implements CanActivate {
     if (!permissions) {
       return true;
     }
+
+    const roleIds = request.user.roles || [];
+    if (!roleIds.length) {
+      throw new ForbiddenException('该账号暂无权限，请联系管理员!');
+    }
+
+    const roles = await this.roleService.findByIds(roleIds);
+    console.log(request.user, roles);
+    const menus: Menu[] = roles.reduce((total, current) => {
+      total.push(...current.menus);
+      return total;
+    }, []);
 
     // 查找权限
     const isFind = permissions.filter((v) => {

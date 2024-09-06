@@ -92,12 +92,12 @@ export class RoleController {
 
   @ApiOperation({ summary: '禁用/启用' })
   @SetMetadata(ReflectMetadataKeys.ACTION_NAME, '禁用/启用')
-  @Patch('status/:id/:status')
+  @Patch('status/:id/:display')
   @VerifyPermission('system:role:status')
   status(
     @Param('id', ParseIntPipe) id: number,
-    @Param('status', ParseIntPipe) status: number,
+    @Param('display', ParseIntPipe) display: number,
   ) {
-    return this.roleService.status(id, status);
+    return this.roleService.status(id, display);
   }
 }

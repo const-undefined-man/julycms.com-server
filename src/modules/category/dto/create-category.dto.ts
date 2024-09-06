@@ -22,7 +22,7 @@ export class CreateCategoryDto {
   @ApiPropertyOptional({ description: '栏目名称英文' })
   @Length(0, 64, { message: '栏目名称英文最大为64个字符' })
   @IsOptional()
-  catnameEn: string;
+  catnameEn?: string;
 
   @ApiProperty({ description: '栏目目录' })
   @IsNotEmpty({ message: '栏目目录不能为空' })
@@ -32,12 +32,12 @@ export class CreateCategoryDto {
   @ApiPropertyOptional({ description: '栏目icon' })
   @IsOptional()
   @MaxLength(64, { message: '栏目icon最大为64个字符' })
-  icon: string;
+  icon?: string;
 
   @ApiPropertyOptional({ description: '栏目描述' })
   @MaxLength(255, { message: '栏目描述最大为255个字符' })
   @IsOptional()
-  description: string;
+  description?: string;
 
   @ApiPropertyOptional({
     type: CreateAttachementDto,
@@ -70,22 +70,22 @@ export class CreateCategoryDto {
   @ApiPropertyOptional({ description: 'SEO标题' })
   @IsOptional()
   @MaxLength(128, { message: 'SEO标题最大为128个字符' })
-  seoTitle: string;
+  seoTitle?: string;
 
   @ApiPropertyOptional({ description: 'SEO关键词' })
   @IsOptional()
   @MaxLength(255, { message: 'SEO关键词最大为255个字符' })
-  seoKeywords: string;
+  seoKeywords?: string;
 
   @ApiPropertyOptional({ description: 'SEO描述' })
   @IsOptional()
   @MaxLength(255, { message: 'SEO描述最大为255个字符' })
-  seoDescription: string;
+  seoDescription?: string;
 
   @ApiPropertyOptional({ description: '是否显示；0 隐藏；1 显示', example: 1 })
   @IsNumber(undefined, { message: '显示状态只能是数字' })
   @IsOptional()
-  display: number;
+  display?: number;
 
   @ApiPropertyOptional({
     description: '链接地址',
@@ -93,11 +93,11 @@ export class CreateCategoryDto {
   })
   @IsUrl(undefined, { message: '链接地址格式错误' })
   @IsOptional()
-  linkUrl: string;
+  linkUrl?: string;
 
   @ApiPropertyOptional({ description: '排序', example: 1 })
   @IsOptional()
-  listorder: number;
+  listorder?: number;
 
   @ApiProperty({ description: '父级栏目', example: '{id: 0}' })
   @IsObject({ message: '父级栏目是一个对象:{id: 1}' })

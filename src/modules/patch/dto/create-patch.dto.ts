@@ -5,7 +5,10 @@ import {
   IsOptional,
   Length,
   MaxLength,
+  ValidateNested,
 } from 'class-validator';
+import { CreatePatchTextDto } from './create-patch-text.dto';
+import { Type } from 'class-transformer';
 
 export class CreatePatchDto {
   @ApiProperty({ description: '标题', example: '标题' })
@@ -16,17 +19,21 @@ export class CreatePatchDto {
   @ApiPropertyOptional({ description: '描述', example: '描述' })
   @IsOptional()
   @MaxLength(255, { message: '描述最大为255个字符' })
-  description: string;
+  description?: string;
 
   @ApiPropertyOptional({ description: '类型', example: 0 })
   @IsOptional()
   @IsNumber(undefined, { message: '类型只能为0或1' })
-  type: number;
+  type?: number;
 
-  // @ApiPropertyOptional({ type: () => CreatePatchTextDto, description: '富文本内容', example: CreatePatchTextDto })
-  // @Type(() => CreatePatchTextDto)
-  // @ValidateNested()
-  // patchText: CreatePatchTextDto;
+  @ApiPropertyOptional({
+    type: () => CreatePatchTextDto,
+    description: '富文本内容',
+    example: CreatePatchTextDto,
+  })
+  @Type(() => CreatePatchTextDto)
+  @IsOptional()
+  patchText?: CreatePatchTextDto;
 
   // @ApiPropertyOptional({
   // 	type: () => [CreatePatchListDto],

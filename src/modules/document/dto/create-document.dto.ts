@@ -25,12 +25,12 @@ export class CreateDocumentDto {
   @ApiPropertyOptional({ description: '描述', example: '描述' })
   @MaxLength(255, { message: '描述最大为255个字符' })
   @IsOptional()
-  description: string;
+  description?: string;
 
   @ApiPropertyOptional({ description: '封面图片', example: '封面图片' })
   @IsOptional()
   @IsObject({ message: '封面图片为Object类型' })
-  cover: Attachement;
+  cover?: Attachement;
 
   @ApiPropertyOptional({ description: 'SEO标题', example: 'SEO标题' })
   @IsOptional()
@@ -40,7 +40,7 @@ export class CreateDocumentDto {
   @ApiPropertyOptional({ description: 'SEO关键词', example: 'SEO关键词' })
   @MaxLength(255, { message: 'SEO关键词最大为255位字符' })
   @IsOptional()
-  seoKeywords: string;
+  seoKeywords?: string;
 
   @ApiPropertyOptional({ description: 'SEO描述', example: 'SEO描述' })
   @MaxLength(255, { message: 'SEO描述最大为255位字符' })
@@ -50,22 +50,22 @@ export class CreateDocumentDto {
   @ApiPropertyOptional({ description: '是否显示', example: 1 })
   @IsOptional()
   @IsNumber(undefined, { message: '显示状态只能为0 或者 1' })
-  display: number;
+  display?: number;
 
   @ApiPropertyOptional({ description: '阅读数', example: 999 })
   @IsOptional()
   @IsNumber(undefined, { message: '阅读数为数字' })
-  readNum: number;
+  readNum?: number;
 
   @ApiPropertyOptional({ description: '点赞数', example: 999 })
   @IsOptional()
   @IsNumber(undefined, { message: '点赞数为数字' })
-  likeNum: number;
+  likeNum?: number;
 
   @ApiPropertyOptional({ description: '关联标签', example: [{ id: 1 }] })
   @IsOptional()
   @IsArray({ message: '关联标签为数组' })
-  tags: Tag[];
+  tags?: number[];
 
   @ApiProperty({ description: '关联导航栏目', example: [{ id: 1 }] })
   @IsNumber(undefined, { message: '关联导航栏目为数字' })
@@ -74,7 +74,7 @@ export class CreateDocumentDto {
   @ApiProperty({ description: '文章内容', example: '富文本内容' })
   @IsOptional()
   @IsNotEmpty({ message: '文章内容不能为空' })
-  content: Content;
+  content?: Content;
 
   @ApiPropertyOptional({
     description: '图集',
@@ -82,7 +82,7 @@ export class CreateDocumentDto {
   })
   @IsOptional()
   @IsArray({ message: '图集内容为数组' })
-  albums: Album[];
+  albums?: Album[];
 
   @ApiPropertyOptional({
     type: () => LinkDto,
@@ -92,5 +92,5 @@ export class CreateDocumentDto {
   @IsOptional()
   @Type(() => LinkDto)
   @ValidateNested()
-  link: LinkDto;
+  link?: LinkDto;
 }

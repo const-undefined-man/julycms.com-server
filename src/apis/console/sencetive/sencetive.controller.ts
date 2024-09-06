@@ -9,12 +9,12 @@ import {
   ParseIntPipe,
   Query,
   DefaultValuePipe,
-  Put,
   ParseArrayPipe,
   SetMetadata,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
+  ApiBody,
   ApiOperation,
   ApiQuery,
   ApiResponse,
@@ -25,6 +25,7 @@ import { SencetiveService } from '@app/modules/sencetive/sencetive.service';
 import { CreateSencetiveDto } from '@app/modules/sencetive/dto/create-sencetive.dto';
 import { UpdateSencetiveDto } from '@app/modules/sencetive/dto/update-sencetive.dto';
 import { Sencetive } from '@app/modules/sencetive/entities/sencetive.entity';
+import { BatchRemoveDto } from '@app/common/dto/batch-remove.dto';
 
 @ApiTags('敏感词')
 @ApiBearerAuth()
@@ -34,6 +35,7 @@ export class SencetiveController {
   constructor(private readonly sencetiveService: SencetiveService) {}
 
   @ApiOperation({ summary: '添加' })
+  @ApiBody({ required: true, type: [CreateSencetiveDto] })
   @SetMetadata(ReflectMetadataKeys.ACTION_NAME, '添加')
   @Post()
   @VerifyPermission('site:sencetive:create')
@@ -94,7 +96,8 @@ export class SencetiveController {
 
   @ApiOperation({ summary: '批量删除' })
   @SetMetadata(ReflectMetadataKeys.ACTION_NAME, '批量删除')
-  @Put('delete')
+  @ApiBody({ required: true, description: 'ids', type: BatchRemoveDto })
+  @Patch('delete')
   @VerifyPermission('site:sencetive:batDel')
   removeBat(@Body('ids', ParseArrayPipe) ids: number[]) {
     return this.sencetiveService.removeBat(ids);

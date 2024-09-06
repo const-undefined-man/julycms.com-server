@@ -5,7 +5,7 @@ export class LinkDto {
   @ApiPropertyOptional({ description: 'ID', example: 1 })
   @IsOptional()
   @IsNumber(undefined, { message: 'id必须为数字' })
-  id: number;
+  id?: number;
 
   @ApiProperty({ description: 'url', example: 'https://www.zhuolian.tech' })
   @IsNotEmpty({ message: '链接地址不能为空' })

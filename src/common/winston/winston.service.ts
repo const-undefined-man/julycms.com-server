@@ -36,7 +36,7 @@ export class WinstonService implements LoggerService {
       defaultOPtions.transports.pop();
       defaultOPtions.rejectionHandlers.pop();
     }
-    const finalOptions = { ...defaultOPtions, ...options };
+    const finalOptions = { exitOnError: false, ...defaultOPtions, ...options };
     this.logger = createLogger(finalOptions);
   }
 

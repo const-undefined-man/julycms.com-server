@@ -99,14 +99,4 @@ export class MenuController {
     return this.menuService.listorder(id, listorder);
   }
 
-  @ApiOperation({ summary: '是否快捷菜单' })
-  @SetMetadata(ReflectMetadataKeys.ACTION_NAME, '快捷菜单')
-  @Patch('quickmenu/:id/:quickmenu')
-  @VerifyPermission('system:menu:quickmenu')
-  quickmenu(
-    @Param('id', ParseIntPipe) id: number,
-    @Param('quickmenu', ParseIntPipe) quickmenu: number,
-  ) {
-    return this.menuService.quickmenu(id, quickmenu);
-  }
 }

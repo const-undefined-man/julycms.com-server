@@ -31,7 +31,7 @@ export class AttachementService {
       // 如果ID存在，说明是修改；先删除之前的附件，再保存新的附件
       if (attachement.id) {
         const atta = await this.findOne(attachement.id);
-        const filePath = path.join(process.cwd(), atta.url);
+        const filePath = path.join(__dirname, atta.url);
         await fs.unlinkSync(filePath);
         this.attachement.remove(atta);
       }
@@ -100,7 +100,7 @@ export class AttachementService {
 
     // 删除硬盘附件
     if (attachement.url) {
-      const filePath = path.join(process.cwd(), attachement.url);
+      const filePath = path.join(__dirname, attachement.url);
 
       if (fs.existsSync(filePath)) {
         fs.unlinkSync(filePath);
@@ -113,7 +113,7 @@ export class AttachementService {
     const attachement = await this.findOne(id);
     // 删除硬盘附件
     if (attachement.url) {
-      const filePath = path.join(process.cwd(), attachement.url);
+      const filePath = path.join(__dirname, attachement.url);
 
       if (fs.existsSync(filePath)) {
         fs.unlinkSync(filePath);

@@ -72,25 +72,9 @@ export class Menu extends CommonEntity {
   })
   display: number;
 
-  @ApiPropertyOptional({ description: '是否快捷菜单' })
-  @Column({
-    type: 'tinyint',
-    nullable: true,
-    width: 1,
-    default: 0,
-    comment: '是否快捷菜单',
-  })
-  quickmenu: number;
-
-  @ApiPropertyOptional({ description: '按钮/菜单风格' })
-  @Column({
-    type: 'varchar',
-    nullable: true,
-    length: 16,
-    default: 'default',
-    comment: '按钮/菜单风格',
-  })
-  style: string | null;
+  @ApiPropertyOptional({ description: '菜单语言' })
+  @Column({ type: 'varchar', length: 255, comment: '菜单语言' })
+  langs: string;
 
   @ApiPropertyOptional({ description: '子菜单' })
   @TreeChildren()
