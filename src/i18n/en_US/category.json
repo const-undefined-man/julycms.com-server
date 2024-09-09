@@ -1,0 +1,5 @@
+{
+  "modelNotFound": "Model {name} does not exist, please modify and try again",
+  "absend": "Section does not exist",
+  "hasSubData": "This section has sub-sections, please delete the sub-sections first"
+}

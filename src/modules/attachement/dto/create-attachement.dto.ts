@@ -4,26 +4,26 @@ import { Manager } from '../../manager/entities/manager.entity';
 export class CreateAttachementDto {
   @ApiPropertyOptional()
   @IsOptional()
-  @IsNumber(undefined, { message: 'id为数字' })
+  @IsNumber(undefined, { message: 'common.IsNumber' })
   id?: number;
 
   @ApiProperty()
-  @IsNotEmpty({ message: 'url不能为空' })
-  @MaxLength(128, { message: 'url长度最大为128个字符' })
+  @IsNotEmpty({ message: 'common.IsNotEmpty' })
+  @MaxLength(128, { message: 'common.MaxLength' })
   url: string;
 
   @ApiPropertyOptional()
   @IsOptional()
-  @IsNumber(undefined, { message: 'size为数字' })
+  @IsNumber(undefined, { message: 'common.IsNumber' })
   size?: number;
 
   @ApiPropertyOptional()
   @IsOptional()
-  @MaxLength(255, { message: 'mimetype长度最大为255个字符' })
+  @MaxLength(255, { message: 'common.MaxLength' })
   mimetype?: string;
 
   @ApiProperty()
-  @IsNumber(undefined, { message: '操作人类型为数字' })
+  @IsNumber(undefined, { message: 'common.IsNumber' })
   operatorType: number;
 
   @ApiPropertyOptional()

@@ -15,27 +15,27 @@ import { Type } from 'class-transformer';
 
 export class CreateCategoryDto {
   @ApiProperty({ description: '栏目名称' })
-  @IsNotEmpty({ message: '栏目名称不能为空' })
-  @Length(1, 64, { message: '栏目名称为1~64个字符' })
+  @IsNotEmpty({ message: 'common.IsNotEmpty' })
+  @Length(1, 64, { message: 'common.MinMax' })
   catname: string;
 
   @ApiPropertyOptional({ description: '栏目名称英文' })
-  @Length(0, 64, { message: '栏目名称英文最大为64个字符' })
+  @MaxLength(64, { message: 'common.MaxLength' })
   @IsOptional()
   catnameEn?: string;
 
   @ApiProperty({ description: '栏目目录' })
-  @IsNotEmpty({ message: '栏目目录不能为空' })
-  @Length(1, 64, { message: '栏目目录为1~64个字符' })
+  @IsNotEmpty({ message: 'common.IsNotEmpty' })
+  @Length(1, 64, { message: 'common.MinMax' })
   catdir: string;
 
   @ApiPropertyOptional({ description: '栏目icon' })
   @IsOptional()
-  @MaxLength(64, { message: '栏目icon最大为64个字符' })
+  @MaxLength(64, { message: 'common.MaxLength' })
   icon?: string;
 
   @ApiPropertyOptional({ description: '栏目描述' })
-  @MaxLength(255, { message: '栏目描述最大为255个字符' })
+  @MaxLength(255, { message: 'common.MaxLength' })
   @IsOptional()
   description?: string;
 
@@ -69,21 +69,21 @@ export class CreateCategoryDto {
 
   @ApiPropertyOptional({ description: 'SEO标题' })
   @IsOptional()
-  @MaxLength(128, { message: 'SEO标题最大为128个字符' })
+  @MaxLength(128, { message: 'common.MaxLength' })
   seoTitle?: string;
 
   @ApiPropertyOptional({ description: 'SEO关键词' })
   @IsOptional()
-  @MaxLength(255, { message: 'SEO关键词最大为255个字符' })
+  @MaxLength(255, { message: 'common.MaxLength' })
   seoKeywords?: string;
 
   @ApiPropertyOptional({ description: 'SEO描述' })
   @IsOptional()
-  @MaxLength(255, { message: 'SEO描述最大为255个字符' })
+  @MaxLength(255, { message: 'common.MaxLength' })
   seoDescription?: string;
 
   @ApiPropertyOptional({ description: '是否显示；0 隐藏；1 显示', example: 1 })
-  @IsNumber(undefined, { message: '显示状态只能是数字' })
+  @IsNumber(undefined, { message: 'common.IsNumber' })
   @IsOptional()
   display?: number;
 
@@ -91,7 +91,7 @@ export class CreateCategoryDto {
     description: '链接地址',
     example: 'http://www.julycms.com',
   })
-  @IsUrl(undefined, { message: '链接地址格式错误' })
+  @IsUrl(undefined, { message: 'common.IsFormat' })
   @IsOptional()
   linkUrl?: string;
 
@@ -100,10 +100,10 @@ export class CreateCategoryDto {
   listorder?: number;
 
   @ApiProperty({ description: '父级栏目', example: '{id: 0}' })
-  @IsObject({ message: '父级栏目是一个对象:{id: 1}' })
+  @IsObject({ message: 'common.IsObject' })
   parent: Category;
 
   @ApiProperty({ description: '栏目模型', example: '{id: 1}' })
-  @IsObject({ message: '模型是一个对象:{id: 1}' })
+  @IsObject({ message: 'common.IsObject' })
   siteModel: SiteModel;
 }

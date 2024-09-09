@@ -329,7 +329,7 @@ export class DocumentService {
   async remove(id: number) {
     const doc = await this.findOne(id);
     if (!doc) {
-      throw new BusinessException({ code: 0, message: '数据不存在' });
+      throw new BusinessException({ code: 0, message: 'common.dataNotFound' });
     }
 
     return this.document.remove(doc);

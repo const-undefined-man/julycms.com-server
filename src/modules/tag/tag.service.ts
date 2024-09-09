@@ -60,7 +60,7 @@ export class TagService {
   async remove(id: number) {
     const res = await this.tag.delete(id);
     if (!res.affected) {
-      throw new BusinessException({ code: 0, message: '数据不存在' });
+      throw new BusinessException({ code: 0, message: 'common.dataNotFound' });
     }
     return res;
   }

@@ -21,7 +21,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
   ): Promise<any> {
     const body = request.body;
     if (!body.code) {
-      throw new BusinessException({ code: 0, message: '请输入验证码' });
+      throw new BusinessException({ code: 0, message: 'auth.code' });
     }
 
     const contextId = ContextIdFactory.getByRequest(request);
@@ -35,10 +35,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
       loggerInfo,
     );
     if (!user) {
-      throw new BusinessException({
-        code: 0,
-        message: '登录失败，请检查登录信息',
-      });
+      throw new BusinessException({ code: 0, message: 'auth.loginFail' });
     }
     return user;
   }

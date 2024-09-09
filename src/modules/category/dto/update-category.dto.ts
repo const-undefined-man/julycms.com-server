@@ -4,7 +4,7 @@ import { ApiProperty, PartialType } from '@nestjs/swagger';
 
 export class UpdateCategoryDto extends PartialType(CreateCategoryDto) {
   @ApiProperty({ description: 'id', example: 1 })
-  @IsNotEmpty({ message: 'id不能为空' })
-  @IsNumber(undefined, { message: 'id为数字' })
+  @IsNotEmpty({ message: 'common.IsNotEmpty' })
+  @IsNumber(undefined, { message: 'common.IsNumber' })
   id: number;
 }

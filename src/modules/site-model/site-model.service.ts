@@ -32,7 +32,7 @@ export class SiteModelService {
   async remove(id: number) {
     const res = await this.findOne(id);
     if (!res) {
-      throw new BusinessException({ code: 0, message: '数据不存在' });
+      throw new BusinessException({ code: 0, message: 'common.dataNotFound' });
     }
 
     return this.siteModel.remove(res);

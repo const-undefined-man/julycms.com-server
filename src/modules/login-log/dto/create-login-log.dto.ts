@@ -9,36 +9,36 @@ import {
 
 export class CreateLoginLogDto {
   @ApiProperty({ description: '用户名', example: 'admin' })
-  @IsNotEmpty({ message: '用户名不能为空' })
-  @MaxLength(32, { message: '用户名长度最大为32个字符' })
+  @IsNotEmpty({ message: 'common.IsNotEmpty' })
+  @MaxLength(32, { message: 'common.MaxLength' })
   username: string;
 
   @ApiPropertyOptional({ description: '登录IP', example: '127.0.0.1' })
   @IsOptional()
-  @IsIP(4, { message: 'IP地址格式不正确' })
+  @IsIP(4, { message: 'common.IsFormat' })
   ip?: string;
 
   @ApiPropertyOptional({ description: '登录地点', example: '内网IP' })
   @IsOptional()
-  @MaxLength(64, { message: '登录地点长度最大为64个字符' })
+  @MaxLength(64, { message: 'common.MaxLength' })
   address?: string;
 
   @ApiPropertyOptional({ description: '操作系统', example: 'Windows 10' })
   @IsOptional()
-  @MaxLength(32, { message: '操作系统长度最大为32个字符' })
+  @MaxLength(32, { message: 'common.MaxLength' })
   os?: string;
 
   @ApiPropertyOptional({ description: '浏览器', example: 'Chrome 80' })
   @IsOptional()
-  @MaxLength(32, { message: '浏览器长度最大为32个字符' })
+  @MaxLength(32, { message: 'common.MaxLength' })
   browser?: string;
 
   @ApiProperty({ description: '操作结果', example: 1 })
-  @IsNumber(undefined, { message: '操作结果必须为数字' })
+  @IsNumber(undefined, { message: 'common.IsNumber' })
   status: number;
 
   @ApiPropertyOptional({ description: '描述', example: '登录成功' })
   @IsOptional()
-  @MaxLength(128, { message: '描述长度最大为128个字符' })
+  @MaxLength(128, { message: 'common.MaxLength' })
   description?: string;
 }

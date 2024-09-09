@@ -16,7 +16,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { BusinessException } from '@app/common';
+import { $t, BusinessException } from '@app/common';
 import { CategoryService } from '@app/modules/category/category.service';
 import { SiteModelService } from '@app/modules/site-model/site-model.service';
 import { VerifyPermission, ReflectMetadataKeys } from '@app/common';
@@ -45,28 +45,22 @@ export class CategoryController {
     // 检查栏目标题重复
     const hasCatname = await this.categoryService.findOneBy({ catname });
     if (hasCatname) {
-      throw new BusinessException({
-        code: 0,
-        message: `【${catname}】栏目标题已存在，请修改后重试`,
-      });
+      const message = $t('common.dataExist', { args: { name: catname } }) as string;
+      throw new BusinessException({ code: 0, message });
     }
 
     // 检查英文栏目标题重复
     const hasCatnameEn = await this.categoryService.findOneBy({ catnameEn });
     if (hasCatnameEn) {
-      throw new BusinessException({
-        code: 0,
-        message: `【${catnameEn}】英文栏目标题重复，请修改后重试`,
-      });
+      const message = $t('common.dataExist', { args: { name: catnameEn } }) as string;
+      throw new BusinessException({ code: 0, message });
     }
 
     // 检查模型是否存在
     const hasModel = await this.siteModelService.findOne(siteModel.id);
     if (!hasModel) {
-      throw new BusinessException({
-        code: 0,
-        message: `模型【${siteModel.id}】不存在，请修改后重试`,
-      });
+      const message = $t('category.modelNotFound', { args: { name: siteModel.id } }) as string;
+      throw new BusinessException({ code: 0, message });
     }
 
     return this.categoryService.create(createCategoryDto, req.user.userId);

@@ -5,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Role } from './entities/role.entity';
 import { In, Repository } from 'typeorm';
 import { paginate, IPaginationOptions } from 'nestjs-typeorm-paginate';
-import { BusinessException } from '@app/common';
+import { $t, BusinessException } from '@app/common';
 import { Menu } from '../menu/entities/menu.entity';
 
 @Injectable()
@@ -18,7 +18,8 @@ export class RoleService {
     // 检查是否存在
     const isHas = await this.findOneByName(createRoleDto.name);
     if (isHas) {
-      throw new BusinessException({ code: 0, message: '角色已存在' });
+      const message = $t('common.dataExist', { args: { name: createRoleDto.name } }) as string;
+      throw new BusinessException({ code: 0, message });
     }
 
     // 角色数据

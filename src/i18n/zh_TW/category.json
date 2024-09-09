@@ -1,0 +1,5 @@
+{
+  "modelNotFound": "模型【{name}】不存在，請修改後重試",
+  "absend": "欄目不存在",
+  "hasSubData": "該欄目下有子欄目，請先刪除子欄目"
+}

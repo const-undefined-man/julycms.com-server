@@ -4,8 +4,8 @@ import { IsNotEmpty, IsNumber, IsOptional, MaxLength } from 'class-validator';
 
 export class CreatePatchListDto {
   @ApiProperty({ description: '碎片id', example: 1 })
-  @IsNotEmpty({ message: '碎片id不能为空' })
-  @IsNumber(undefined, { message: '碎片id必须是数字' })
+  @IsNotEmpty({ message: 'common.IsNotEmpty' })
+  @IsNumber(undefined, { message: 'common.IsNumber' })
   patchId: number;
 
   @ApiPropertyOptional({ description: '碎片列表id', example: 1 })
@@ -13,13 +13,13 @@ export class CreatePatchListDto {
   id?: number;
 
   @ApiProperty({ example: '碎片标题', description: '碎片标题' })
-  @IsNotEmpty({ message: '碎片标题不能为空' })
-  @MaxLength(32, { message: '描述最大为32个字符' })
+  @IsNotEmpty({ message: 'common.IsNotEmpty' })
+  @MaxLength(32, { message: 'common.MaxLength' })
   title: string;
 
   @ApiPropertyOptional({ example: '碎片描述', description: '碎片描述' })
   @IsOptional()
-  @MaxLength(255, { message: '碎片描述最大为255个字符' })
+  @MaxLength(255, { message: 'common.MaxLength' })
   description?: string;
 
   @ApiPropertyOptional({ example: '碎片图片', description: '碎片图片' })
@@ -28,7 +28,7 @@ export class CreatePatchListDto {
 
   @ApiPropertyOptional({ example: '碎片链接', description: '碎片链接' })
   @IsOptional()
-  @MaxLength(255, { message: '碎片链接最大为255个字符' })
+  @MaxLength(255, { message: 'common.MaxLength' })
   url?: string;
 
   @ApiPropertyOptional({ example: 99, description: '碎片排序' })

@@ -132,7 +132,7 @@ export class MenuService {
     if (menu.children.length) {
       throw new BusinessException({
         code: 0,
-        message: '该菜单有下级菜单，不能删除',
+        message: 'menu.hasData',
       });
     }
 

@@ -12,18 +12,18 @@ import { Type } from 'class-transformer';
 
 export class CreatePatchDto {
   @ApiProperty({ description: '标题', example: '标题' })
-  @IsNotEmpty({ message: '标题不能为空' })
-  @Length(1, 32, { message: '标题为1~32位字符' })
+  @IsNotEmpty({ message: 'common.IsNotEmpty' })
+  @Length(1, 32, { message: 'common.MinMax' })
   title: string;
 
   @ApiPropertyOptional({ description: '描述', example: '描述' })
   @IsOptional()
-  @MaxLength(255, { message: '描述最大为255个字符' })
+  @MaxLength(255, { message: 'common.MaxLength' })
   description?: string;
 
   @ApiPropertyOptional({ description: '类型', example: 0 })
   @IsOptional()
-  @IsNumber(undefined, { message: '类型只能为0或1' })
+  @IsNumber(undefined, { message: 'common.IsDisplay' })
   type?: number;
 
   @ApiPropertyOptional({

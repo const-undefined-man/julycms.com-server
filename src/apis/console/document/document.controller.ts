@@ -92,7 +92,7 @@ export class DocumentController {
     // 这里是根据栏目id获取栏目数据
     const cateinfo = await this.categoryService.findById(catId);
     if (!cateinfo) {
-      throw new BusinessException({ code: 404, message: '栏目不存在' });
+      throw new BusinessException({ code: 404, message: 'category.absend' });
     }
     // 单页模型
     if (modelMark === 'page') {

@@ -107,14 +107,14 @@ export class PatchService {
   async remove(id: number) {
     const res = await this.findOne(id);
     if (!res) {
-      throw new BusinessException({ code: 0, message: '数据不存在' });
+      throw new BusinessException({ code: 0, message: 'common.dataNotFound' });
     }
 
     // 列表类型碎片检测
     if (res.patchList && res.patchList.length) {
       throw new BusinessException({
         code: 0,
-        message: '该碎片下有数据，请先删除碎片字数据再尝试',
+        message: 'patch.hasData',
       });
     }
 
@@ -126,7 +126,7 @@ export class PatchService {
         }
       });
     } catch (error) {
-      throw new BusinessException({ code: 0, message: '删除失败' });
+      throw new BusinessException({ code: 0, message: 'patch.deleteFail' });
     }
   }
 
@@ -235,7 +235,7 @@ export class PatchService {
       relations: ['img'],
     });
     if (!res) {
-      throw new BusinessException({ code: 0, message: '数据不存在' });
+      throw new BusinessException({ code: 0, message: 'common.dataNotFound' });
     }
 
     try {
@@ -250,7 +250,7 @@ export class PatchService {
         }
       });
     } catch (error) {
-      throw new BusinessException({ code: 0, message: '删除失败' });
+      throw new BusinessException({ code: 0, message: 'patch.deleteFail' });
     }
   }
 

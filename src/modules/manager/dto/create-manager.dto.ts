@@ -12,11 +12,11 @@ import {
 
 export class CreateManagerDto {
   @ApiProperty({ description: '账号', example: 'admin' })
-  @IsNotEmpty({ message: '账号不能为空' })
+  @IsNotEmpty({ message: 'common.IsNotEmpty' })
   username: string;
 
   @ApiProperty({ description: '密码', example: 'admin' })
-  @IsNotEmpty({ message: '密码不能为空' })
+  @IsNotEmpty({ message: 'common.IsNotEmpty' })
   password: string;
 
   @ApiPropertyOptional({ description: '头像-附件ID' })
@@ -29,13 +29,13 @@ export class CreateManagerDto {
 
   @ApiPropertyOptional({ description: '邮箱', example: 'admin@julycms.com' })
   @IsOptional()
-  @IsEmail(undefined, { message: '邮箱格式错误' })
+  @IsEmail(undefined, { message: 'common.IsFormat' })
   email?: string;
 
   @ApiPropertyOptional({ description: '手机号码', example: '13311112222' })
   @IsOptional()
-  @IsPhoneNumber('CN', { message: '手机号码格式错误' })
-  @Length(11, 11, { message: '手机号码为11位' })
+  @IsPhoneNumber('CN', { message: 'common.IsFormat' })
+  @Length(11, 11, { message: 'common.Length' })
   phoneNumber?: string;
 
   @ApiPropertyOptional({ description: '最后登录Ip', example: '127.0.0.1' })
@@ -43,7 +43,7 @@ export class CreateManagerDto {
   lastLoginIp?: string;
 
   @ApiPropertyOptional({ description: '关联的角色', example: [{ id: 1 }] })
-  @IsOptional({ message: '关联的角色不能为空' })
-  @IsArray({ message: '关联的角色格式错误' })
+  @IsOptional({ message: 'common.IsNotEmpty' })
+  @IsArray({ message: 'common.IsFormat' })
   roles?: Role[];
 }

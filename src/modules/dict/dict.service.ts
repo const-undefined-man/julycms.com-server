@@ -37,7 +37,7 @@ export class DictService {
       relations: ['values'],
     });
     if (!dict.display) {
-      throw new BusinessException({ code: 0, message: '字典数据已禁用' });
+      throw new BusinessException({ code: 0, message: 'dict.isDisabled' });
     }
 
     return dict.values.filter((v) => v.display == 1);
@@ -50,13 +50,13 @@ export class DictService {
   async remove(id: number) {
     const dict = await this.findOne(id);
     if (!dict) {
-      throw new BusinessException({ code: 0, message: '数据不存在' });
+      throw new BusinessException({ code: 0, message: 'common.dataNotFound' });
     }
 
     if (dict.values.length) {
       throw new BusinessException({
         code: 0,
-        message: '该数据有绑定字段数据，不能删除',
+        message: 'dict.hasData',
       });
     }
 

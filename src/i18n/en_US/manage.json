@@ -1,0 +1,5 @@
+{
+  "exist": "Account already exists",
+  "absent": "Account does not exist",
+  "pwdError": "Incorrect password"
+}

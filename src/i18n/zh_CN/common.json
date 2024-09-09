@@ -1,8 +1,16 @@
 {
   "IsNotEmpty": "{property} 不能为空",
-  "Length": "{property} 为 {constraints.0} ~ {constraints.1} 位字符",
+  "MinMax": "{property} 为 {constraints.0} ~ {constraints.1} 位字符",
+  "Length": "{property} 为 {constraints.0}位字符",
   "MaxLength": "{property} 最大为 {constraints.0} 位字符",
   "IsAlpha": "{property} 只能是字母",
   "IsNumber": "{property} 只能是数字",
-  "IsArray": "{property} 为数组"
+  "IsArray": "{property} 为数组",
+  "IsFormat": "{property} 格式错误",
+  "MinNumber": "{property} 最小为 {constraints.0}",
+  "MaxNumber": "{property} 最大为 {constraints.0}",
+  "IsObject": "{property} 是一个对象",
+  "IsDisplay": "{property} 只能为 0 或者 1",
+  "dataNotFound": "数据不存在",
+  "dataExist": "{name} 已存在，请修改后重试"
 }

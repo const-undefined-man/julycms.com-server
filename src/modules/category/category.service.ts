@@ -207,14 +207,14 @@ export class CategoryService {
   async remove(id: number) {
     const category = await this.findOne(id);
     if (!category) {
-      throw new BusinessException({ code: 0, message: '数据不存在' });
+      throw new BusinessException({ code: 0, message: 'common.dataNotFound' });
     }
 
     const childrenCount = await this.category.countDescendants(category);
     if (childrenCount > 1) {
       throw new BusinessException({
         code: 0,
-        message: '该栏目下有子栏目，请先删除子栏目',
+        message: 'category.hasSubData',
       });
     }
 

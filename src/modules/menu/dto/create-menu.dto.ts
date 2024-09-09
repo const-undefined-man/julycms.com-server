@@ -12,15 +12,15 @@ export class CreateMenuDto {
     description: '菜单类型；0 菜单； 1按钮',
     example: 1,
   })
-  @IsNumber(undefined, { message: '菜单类型只能为数字类型' })
+  @IsNumber(undefined, { message: 'common.IsNumber' })
   type: number;
 
   @ApiProperty({
     description: '菜单/按钮名称',
     example: '测试菜单',
   })
-  @IsNotEmpty({ message: '菜单/按钮名称不能为空' })
-  @Length(1, 32, { message: '名称为1~32位字符' })
+  @IsNotEmpty({ message: 'common.IsNotEmpty' })
+  @Length(1, 32, { message: 'common.MinMax' })
   name: string;
 
   @ApiPropertyOptional({
@@ -28,8 +28,8 @@ export class CreateMenuDto {
     example: 'tag',
   })
   @IsOptional()
-  @IsNotEmpty({ message: '标识不能为空' })
-  @Length(1, 32, { message: '标识为1~32位字符' })
+  @IsNotEmpty({ message: 'common.IsNotEmpty' })
+  @Length(1, 32, { message: 'common.MinMax' })
   mark?: string;
 
   @ApiPropertyOptional({
@@ -37,7 +37,7 @@ export class CreateMenuDto {
     example: 'el-icon-aaa',
   })
   @IsOptional()
-  @MaxLength(32, { message: '菜单图标最大为32个字符' })
+  @MaxLength(32, { message: 'common.MaxLength' })
   icon?: string;
 
   @ApiPropertyOptional({
@@ -45,7 +45,7 @@ export class CreateMenuDto {
     example: '菜单',
   })
   @IsOptional()
-  @MaxLength(32, { message: '组件名称最大为32个字符' })
+  @MaxLength(32, { message: 'common.MaxLength' })
   componentName?: string;
 
   @ApiPropertyOptional({
@@ -53,7 +53,7 @@ export class CreateMenuDto {
     example: '/menu1',
   })
   @IsOptional()
-  @MaxLength(128, { message: '路由地址最大为128个字符' })
+  @MaxLength(128, { message: 'common.MaxLength' })
   componentRoute?: string;
 
   @ApiPropertyOptional({
@@ -61,7 +61,7 @@ export class CreateMenuDto {
     example: '/menu/index.vue',
   })
   @IsOptional()
-  @MaxLength(128, { message: '组件路径最大为128个字符' })
+  @MaxLength(128, { message: 'common.MaxLength' })
   componentPath?: string;
 
   @ApiPropertyOptional({
@@ -83,7 +83,7 @@ export class CreateMenuDto {
 
   @ApiPropertyOptional({ description: '按钮/菜单风格', example: 'primary' })
   @IsOptional()
-  @Length(0, 16, { message: '风格最大为16个字符' })
+  @MaxLength(16, { message: 'common.MaxLength' })
   style?: string;
 
   @ApiProperty({ description: '菜单语言', example: '{en_US: "Menu"}' })
@@ -95,6 +95,6 @@ export class CreateMenuDto {
     example: [{ id: 1 }],
   })
   @IsOptional()
-  @IsNumber(undefined, { message: '父级菜单为数字' })
+  @IsNumber(undefined, { message: 'common.IsNumber' })
   parent?: number;
 }

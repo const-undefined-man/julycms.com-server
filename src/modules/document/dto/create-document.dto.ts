@@ -18,62 +18,62 @@ import { Type } from 'class-transformer';
 
 export class CreateDocumentDto {
   @ApiProperty({ description: '标题', example: '标题' })
-  @IsNotEmpty({ message: '标题不能为空' })
-  @Length(1, 64, { message: '标题为1~64位字符' })
+  @IsNotEmpty({ message: 'common.IsNotEmpty' })
+  @Length(1, 64, { message: 'common.MinMax' })
   title: string;
 
   @ApiPropertyOptional({ description: '描述', example: '描述' })
-  @MaxLength(255, { message: '描述最大为255个字符' })
+  @MaxLength(255, { message: 'common.MaxLength' })
   @IsOptional()
   description?: string;
 
   @ApiPropertyOptional({ description: '封面图片', example: '封面图片' })
   @IsOptional()
-  @IsObject({ message: '封面图片为Object类型' })
+  @IsObject({ message: 'common.IsObject' })
   cover?: Attachement;
 
   @ApiPropertyOptional({ description: 'SEO标题', example: 'SEO标题' })
   @IsOptional()
-  @MaxLength(128, { message: 'SEO标题大为128位字符' })
+  @MaxLength(128, { message: 'common.MaxLength' })
   seoTitle: string;
 
   @ApiPropertyOptional({ description: 'SEO关键词', example: 'SEO关键词' })
-  @MaxLength(255, { message: 'SEO关键词最大为255位字符' })
+  @MaxLength(255, { message: 'common.MaxLength' })
   @IsOptional()
   seoKeywords?: string;
 
   @ApiPropertyOptional({ description: 'SEO描述', example: 'SEO描述' })
-  @MaxLength(255, { message: 'SEO描述最大为255位字符' })
+  @MaxLength(255, { message: 'common.MaxLength' })
   @IsOptional()
   seoDescription: string;
 
   @ApiPropertyOptional({ description: '是否显示', example: 1 })
   @IsOptional()
-  @IsNumber(undefined, { message: '显示状态只能为0 或者 1' })
+  @IsNumber(undefined, { message: 'common.IsDisplay' })
   display?: number;
 
   @ApiPropertyOptional({ description: '阅读数', example: 999 })
   @IsOptional()
-  @IsNumber(undefined, { message: '阅读数为数字' })
+  @IsNumber(undefined, { message: 'common.IsNumber' })
   readNum?: number;
 
   @ApiPropertyOptional({ description: '点赞数', example: 999 })
   @IsOptional()
-  @IsNumber(undefined, { message: '点赞数为数字' })
+  @IsNumber(undefined, { message: 'common.IsNumber' })
   likeNum?: number;
 
   @ApiPropertyOptional({ description: '关联标签', example: [{ id: 1 }] })
   @IsOptional()
-  @IsArray({ message: '关联标签为数组' })
+  @IsArray({ message: 'common.IsArray' })
   tags?: number[];
 
   @ApiProperty({ description: '关联导航栏目', example: [{ id: 1 }] })
-  @IsNumber(undefined, { message: '关联导航栏目为数字' })
+  @IsNumber(undefined, { message: 'common.IsNumber' })
   category: number;
 
   @ApiProperty({ description: '文章内容', example: '富文本内容' })
   @IsOptional()
-  @IsNotEmpty({ message: '文章内容不能为空' })
+  @IsNotEmpty({ message: 'common.IsNotEmpty' })
   content?: Content;
 
   @ApiPropertyOptional({
@@ -81,7 +81,7 @@ export class CreateDocumentDto {
     example: [{ listorder: 1, img: '', description: '' }],
   })
   @IsOptional()
-  @IsArray({ message: '图集内容为数组' })
+  @IsArray({ message: 'common.IsArray' })
   albums?: Album[];
 
   @ApiPropertyOptional({

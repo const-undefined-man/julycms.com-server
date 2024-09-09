@@ -82,7 +82,7 @@ export class AttachementService {
 
     const res = await this.attachement.update(id, data);
     if (!res.affected) {
-      throw new BusinessException({ code: 0, message: '数据不存在' });
+      throw new BusinessException({ code: 0, message: 'common.dataNotFound' });
     }
     return res;
   }
@@ -90,7 +90,7 @@ export class AttachementService {
   async remove(id: number) {
     const attachement = await this.findOne(id);
     if (!attachement) {
-      throw new BusinessException({ code: 0, message: '数据不存在' });
+      throw new BusinessException({ code: 0, message: 'common.dataNotFound' });
     }
 
     // 删除的时候要先检测状态是否正在使用

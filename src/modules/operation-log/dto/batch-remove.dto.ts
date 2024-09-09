@@ -9,7 +9,7 @@ export class BatchRemoveDto {
       type: 'number',
     },
   })
-  @IsNotEmpty({ message: 'ids不能为空' })
-  @IsArray({ message: 'ids必须是一个数组' })
+  @IsNotEmpty({ message: 'common.IsNotEmpty' })
+  @IsArray({ message: 'common.IsArray' })
   ids: number[];
 }

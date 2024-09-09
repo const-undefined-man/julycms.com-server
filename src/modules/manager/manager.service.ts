@@ -24,7 +24,7 @@ export class ManagerService {
     // 先检查是否存在
     const isHas = await this.findOneByUsername(createManagerDto.username);
     if (isHas) {
-      throw new BusinessException({ code: 0, message: '账号已存在' });
+      throw new BusinessException({ code: 0, message: 'manage.exist' });
     }
 
     // 管理员信息
@@ -127,13 +127,13 @@ export class ManagerService {
     // 根据用户id查找用户
     const manager = await this.findOne(+id);
     if (!manager) {
-      throw new BusinessException({ code: 0, message: '用户不存在' });
+      throw new BusinessException({ code: 0, message: 'manage.absent' });
     }
 
     // 校验密码
     const isVerify = await bcryptjs.compareSync(password, manager.password);
     if (!isVerify) {
-      throw new BusinessException({ code: 0, message: '密码错误' });
+      throw new BusinessException({ code: 0, message: 'manage.pwdError' });
     }
 
     manager.password = newPassword;

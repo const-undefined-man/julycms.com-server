@@ -1,0 +1,6 @@
+{
+  "isDisabled": "Dictionary data is disabled",
+  "hasData": "This data has bound field data, cannot be deleted",
+  "absent": "Dictionary does not exist",
+  "exist": "Dictionary already exists"
+}

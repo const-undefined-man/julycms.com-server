@@ -19,14 +19,14 @@ export class DictValueService {
   async create(createDictValueDto: CreateDictValueDto) {
     const hasData = await this.dictService.findOne(createDictValueDto.dict);
     if (!hasData) {
-      throw new BusinessException({ code: 0, message: '字典不存在' });
+      throw new BusinessException({ code: 0, message: 'dict.absent' });
     }
 
     const hasValue = await this.dictValue.findOne({
       where: { label: createDictValueDto.label },
     });
     if (hasValue) {
-      throw new BusinessException({ code: 0, message: '字典已存在' });
+      throw new BusinessException({ code: 0, message: 'dict.exist' });
     }
 
     const dict = new Dict();
@@ -56,14 +56,14 @@ export class DictValueService {
     const hasData = await this.dictService.findOne(updateDictValueDto.dict);
 
     if (!hasData) {
-      throw new BusinessException({ code: 0, message: '字典不存在' });
+      throw new BusinessException({ code: 0, message: 'dict.absent' });
     }
 
     const hasValue = await this.dictValue.findOne({
       where: { label: updateDictValueDto.label },
     });
     if (hasValue) {
-      throw new BusinessException({ code: 0, message: '字典已存在' });
+      throw new BusinessException({ code: 0, message: 'dict.exist' });
     }
 
     const dict = new Dict();
@@ -84,7 +84,7 @@ export class DictValueService {
   async remove(id: number) {
     const res = await this.dictValue.delete(id);
     if (!res.affected) {
-      throw new BusinessException({ code: 0, message: '数据不存在' });
+      throw new BusinessException({ code: 0, message: 'common.dataNotFound' });
     }
     return res;
   }

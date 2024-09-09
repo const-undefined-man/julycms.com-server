@@ -1,8 +1,16 @@
 {
-  "IsNotEmpty": "{property} 이(가) 비어있을 수 없습니다.",
-  "Length": "{property}은(는) {constraints.0} ~ {constraints.1} 글자 사이여야 합니다.",
-  "MaxLength": "{property}의 최대 길이는 {constraints.0} 글자입니다.",
-  "IsAlpha": "{property}은(는) 알파벳만 포함해야 합니다.",
-  "IsNumber": "{property}은(는) 숫자만 포함해야 합니다.",
-  "IsArray": "{property}은(는) 배열이어야 합니다."
+  "IsNotEmpty": "{property} 은(는) 비어있지 않아야 합니다",
+  "MinMax": "{property} 은(는) {constraints.0}에서 {constraints.1} 사이의 문자여야 합니다",
+  "Length": "{property} 은(는) {constraints.0} 글자여야 합니다",
+  "MaxLength": "{property} 은(는) {constraints.0} 글자를 초과할 수 없습니다",
+  "IsAlpha": "{property} 은(는) 오직 알파벳만 포함할 수 있습니다",
+  "IsNumber": "{property} 은(는) 오직 숫자만 포함할 수 있습니다",
+  "IsArray": "{property} 은(는) 배열이어야 합니다",
+  "IsFormat": "{property} 형식이 잘못되었습니다",
+  "MinNumber": "{property} 은(는) 최소 {constraints.0}이상이어야 합니다",
+  "MaxNumber": "{property} 은(는) 최대 {constraints.0}이하이어야 합니다",
+  "IsObject": "{property} 은(는) 객체여야 합니다",
+  "IsDisplay": "{property} 은(는) 오직 0 또는 1만 가능합니다",
+  "dataNotFound": "데이터가 존재하지 않습니다",
+  "dataExist": "{name} 은(는) 이미 존재합니다, 수정 후 다시 시도해주세요"
 }

@@ -52,14 +52,14 @@ export class AuthService {
       this.logger.debug('验证码过期', AuthService.name);
       loggerInfo.description = '验证码过期';
       this.loginlogService.create(loggerInfo);
-      throw new BusinessException({ code: 0, message: '验证码过期' });
+      throw new BusinessException({ code: 0, message: 'auth.codeExpired' });
     }
 
     if (code.toLowerCase() !== loginCode.toLowerCase()) {
       this.logger.debug('验证码错误', AuthService.name);
       loggerInfo.description = '验证码错误';
       this.loginlogService.create(loggerInfo);
-      throw new BusinessException({ code: 0, message: '验证码错误' });
+      throw new BusinessException({ code: 0, message: 'auth.codeError' });
     }
     const manager = await this.managerService.findOneByUsername(username);
 
@@ -67,7 +67,7 @@ export class AuthService {
       this.logger.debug(`账号或密码错误: ${username}`, AuthService.name);
       loggerInfo.description = '账号或密码错误';
       this.loginlogService.create(loggerInfo);
-      throw new BusinessException({ code: 0, message: '账号或密码错误' });
+      throw new BusinessException({ code: 0, message: 'auth.accountError' });
     }
 
     // 校验密码
@@ -77,7 +77,7 @@ export class AuthService {
       loggerInfo.description = '密码或账号错误';
       this.redis.incr(LoginUserKey);
       this.loginlogService.create(loggerInfo);
-      throw new BusinessException({ code: 0, message: '密码或账号错误' });
+      throw new BusinessException({ code: 0, message: 'auth.passwordError' });
     }
 
     loggerInfo.status = 1;

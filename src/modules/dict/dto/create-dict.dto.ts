@@ -9,18 +9,17 @@ import {
   Length,
   MaxLength,
 } from 'class-validator';
-import { i18nValidationMessage } from 'nestjs-i18n';
 
 export class CreateDictDto {
   @ApiProperty({ description: '字典名称', example: '性别' })
   @IsNotEmpty({ message: 'common.IsNotEmpty' })
-  @Length(10, 16, { message: i18nValidationMessage('common.Length') })
+  @Length(1, 16, { message: 'common.MinMax' })
   name: string;
 
   @ApiProperty({ description: '字典标识', example: 'gender' })
   @IsNotEmpty({ message: 'common.IsNotEmpty' })
   @IsAlpha('en-US', { message: 'common.IsAlpha' })
-  @Length(1, 16, { message: 'common.Length' })
+  @Length(1, 16, { message: 'common.MinMax' })
   type: string;
 
   @ApiPropertyOptional({ description: '是否显示；0 隐藏；1 显示', example: 1 })

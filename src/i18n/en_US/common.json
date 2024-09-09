@@ -1,8 +1,16 @@
 {
   "IsNotEmpty": "{property} cannot be empty",
-  "Length": "{property} must be between {constraints.0} and {constraints.1} characters",
-  "MaxLength": "{property} must not exceed {constraints.0} characters",
+  "MinMax": "{property} should be between {constraints.0} and {constraints.1} characters",
+  "Length": "{property} should be {constraints.0} characters",
+  "MaxLength": "{property} should be at most {constraints.0} characters",
   "IsAlpha": "{property} can only contain letters",
   "IsNumber": "{property} can only contain numbers",
-  "IsArray": "{property} must be an array"
+  "IsArray": "{property} should be an array",
+  "IsFormat": "{property} format is incorrect",
+  "MinNumber": "{property} should be at least {constraints.0}",
+  "MaxNumber": "{property} should be at most {constraints.0}",
+  "IsObject": "{property} should be an object",
+  "IsDisplay": "{property} can only be 0 or 1",
+  "dataNotFound": "Data does not exist",
+  "dataExist": "{name} already exists, please modify and try again"
 }
