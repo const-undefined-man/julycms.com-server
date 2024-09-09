@@ -1,0 +1,8 @@
+{
+  "IsNotEmpty": "{property} 이(가) 비어있을 수 없습니다.",
+  "Length": "{property}은(는) {constraints.0} ~ {constraints.1} 글자 사이여야 합니다.",
+  "MaxLength": "{property}의 최대 길이는 {constraints.0} 글자입니다.",
+  "IsAlpha": "{property}은(는) 알파벳만 포함해야 합니다.",
+  "IsNumber": "{property}은(는) 숫자만 포함해야 합니다.",
+  "IsArray": "{property}은(는) 배열이어야 합니다."
+}

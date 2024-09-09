@@ -5,7 +5,7 @@ import {
   NestInterceptor,
 } from '@nestjs/common';
 import { Request } from 'express';
-import { Observable, catchError, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { ReflectMetadataKeys } from '../constants';
 
 @Injectable()
@@ -23,10 +23,6 @@ export class OperationLogInterceptor implements NestInterceptor {
         tap(() => {
           req.loggerInfo.module = controllerName;
           req.loggerInfo.operation = actionName;
-        }),
-        catchError((err) => {
-          console.error('Action failed:', err);
-          throw err;
         }),
       );
     }

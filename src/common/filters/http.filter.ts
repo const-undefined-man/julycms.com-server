@@ -1,6 +1,5 @@
 import {
   ArgumentsHost,
-  BadRequestException,
   Catch,
   ExceptionFilter,
   HttpException,
@@ -8,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { BusinessException } from './business.exception';
 import { QueryFailedError } from 'typeorm';
-import { I18nContext } from 'nestjs-i18n';
+import { I18nContext, I18nValidationException } from 'nestjs-i18n';
 
 @Catch(HttpException)
 export class HttpFilter implements ExceptionFilter {
@@ -40,7 +39,8 @@ export class HttpFilter implements ExceptionFilter {
     }
 
     // 参数错误拦截
-    if (exception instanceof BadRequestException) {
+    if (exception instanceof I18nValidationException) {
+      console.log('error', exception.errors)
       response.status(HttpStatus.OK).send({
         data: null,
         code: status,

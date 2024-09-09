@@ -9,31 +9,32 @@ import {
   Length,
   MaxLength,
 } from 'class-validator';
+import { i18nValidationMessage } from 'nestjs-i18n';
 
 export class CreateDictDto {
   @ApiProperty({ description: '字典名称', example: '性别' })
-  @IsNotEmpty({ message: 'dict.nameIsNotEmpty' })
-  @Length(10, 16, { message: 'dict.nameLength' })
+  @IsNotEmpty({ message: 'common.IsNotEmpty' })
+  @Length(10, 16, { message: i18nValidationMessage('common.Length') })
   name: string;
 
   @ApiProperty({ description: '字典标识', example: 'gender' })
-  @IsNotEmpty({ message: '字典标识不能为空' })
-  @IsAlpha('en-US', { message: '字典标识只能是字母' })
-  @Length(1, 16, { message: '字典标识为1~16位字符' })
+  @IsNotEmpty({ message: 'common.IsNotEmpty' })
+  @IsAlpha('en-US', { message: 'common.IsAlpha' })
+  @Length(1, 16, { message: 'common.Length' })
   type: string;
 
   @ApiPropertyOptional({ description: '是否显示；0 隐藏；1 显示', example: 1 })
-  @IsNumber(undefined, { message: '显示状态只能是数字' })
+  @IsNumber(undefined, { message: 'common.IsNumber' })
   @IsOptional()
   display?: number;
 
   @ApiPropertyOptional({ description: '字典备注' })
-  @MaxLength(255, { message: '字典备注最大为255位字符' })
+  @MaxLength(255, { message: 'common.MaxLength' })
   @IsOptional()
   remark?: string;
 
   @ApiPropertyOptional({ description: '字典值', example: '' })
   @IsOptional()
-  @IsArray({ message: '字典值为数组' })
+  @IsArray({ message: 'common.IsArray' })
   values?: DictValue[];
 }

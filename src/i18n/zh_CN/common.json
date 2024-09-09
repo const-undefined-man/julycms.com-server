@@ -1,0 +1,8 @@
+{
+  "IsNotEmpty": "{property} 不能为空",
+  "Length": "{property} 为 {constraints.0} ~ {constraints.1} 位字符",
+  "MaxLength": "{property} 最大为 {constraints.0} 位字符",
+  "IsAlpha": "{property} 只能是字母",
+  "IsNumber": "{property} 只能是数字",
+  "IsArray": "{property} 为数组"
+}

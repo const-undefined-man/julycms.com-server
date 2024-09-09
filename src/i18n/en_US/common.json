@@ -1,0 +1,8 @@
+{
+  "IsNotEmpty": "{property} cannot be empty",
+  "Length": "{property} must be between {constraints.0} and {constraints.1} characters",
+  "MaxLength": "{property} must not exceed {constraints.0} characters",
+  "IsAlpha": "{property} can only contain letters",
+  "IsNumber": "{property} can only contain numbers",
+  "IsArray": "{property} must be an array"
+}
