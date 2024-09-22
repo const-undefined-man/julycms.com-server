@@ -7,7 +7,6 @@ import {
   Param,
   Delete,
   ParseIntPipe,
-  DefaultValuePipe,
   Query,
   Req,
   SetMetadata,
@@ -18,7 +17,6 @@ import { UpdateDocumentDto } from '@app/modules/document/dto/update-document.dto
 import {
   ApiBearerAuth,
   ApiOperation,
-  ApiQuery,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
@@ -29,6 +27,8 @@ import {
 } from '@app/common';
 import { Document } from '@app/modules/document/entities/document.entity';
 import { CategoryService } from '@app/modules/category/category.service';
+import { QueryDocumentDto } from '@app/modules/document/dto/query-document.dto';
+import { ParamDocumentDto } from '@app/modules/document/dto/param-document.dto';
 
 @ApiTags('内容管理')
 @ApiBearerAuth()
@@ -50,44 +50,12 @@ export class DocumentController {
 
   @ApiOperation({ summary: '列表' })
   @ApiResponse({ status: 200, description: '200', type: [Document] })
-  @ApiQuery({
-    name: 'id',
-    required: false,
-    description: '第几页',
-    type: Number,
-    example: 1,
-  })
-  @ApiQuery({
-    name: 'title',
-    required: false,
-    description: '标题',
-    type: String,
-    example: '标题',
-  })
-  @ApiQuery({
-    name: 'page',
-    required: false,
-    description: '第几页',
-    type: Number,
-    example: 1,
-  })
-  @ApiQuery({
-    name: 'limit',
-    required: false,
-    description: '每页显示数',
-    type: Number,
-    example: 10,
-  })
   @SetMetadata(ReflectMetadataKeys.ACTION_NAME, '列表')
   @Get(':catId/:modelMark')
   @VerifyPermission('content:document:query')
   async findAll(
-    @Param('catId', ParseIntPipe) catId: number,
-    @Param('modelMark') modelMark: string,
-    @Query('id', new DefaultValuePipe(0), ParseIntPipe) id: number,
-    @Query('title') title: string,
-    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
-    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit = 10,
+    @Param() { catId, modelMark }: ParamDocumentDto,
+    @Query() query: QueryDocumentDto,
   ) {
     // 这里是根据栏目id获取栏目数据
     const cateinfo = await this.categoryService.findById(catId);
@@ -108,8 +76,8 @@ export class DocumentController {
         : [cateinfo.id];
       return this.documentService.findAllList(
         ids,
-        { page, limit },
-        { id, title },
+        { page: query.page || 1, limit: query.limit || 10 },
+        { id: query.id, title: query.title },
       );
     }
   }

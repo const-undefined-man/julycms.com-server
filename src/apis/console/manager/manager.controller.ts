@@ -8,7 +8,6 @@ import {
   Delete,
   ParseIntPipe,
   Query,
-  DefaultValuePipe,
   SetMetadata,
 } from '@nestjs/common';
 import { ManagerService } from '@app/modules/manager/manager.service';
@@ -18,12 +17,12 @@ import { UpdatePasswordManagerDto } from '@app/modules/manager/dto/update-passwo
 import {
   ApiBearerAuth,
   ApiOperation,
-  ApiQuery,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import { VerifyPermission, ReflectMetadataKeys } from '@app/common';
 import { Manager } from '@app/modules/manager/entities/manager.entity';
+import { QueryDto } from '@app/modules/query-dto';
 
 @ApiTags('管理员管理')
 @ApiBearerAuth()
@@ -42,28 +41,11 @@ export class ManagerController {
 
   @ApiOperation({ summary: '列表' })
   @ApiResponse({ status: 200, description: '200', type: [Manager] })
-  @ApiQuery({
-    name: 'page',
-    required: false,
-    description: '第几页',
-    type: Number,
-    example: 1,
-  })
-  @ApiQuery({
-    name: 'limit',
-    required: false,
-    description: '每页显示数',
-    type: Number,
-    example: 10,
-  })
   @SetMetadata(ReflectMetadataKeys.ACTION_NAME, '列表')
   @Get()
   @VerifyPermission('system:manager:query')
-  findAll(
-    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
-    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit = 10,
-  ) {
-    return this.managerService.findAll({ page, limit });
+  findAll(@Query() query: QueryDto) {
+    return this.managerService.findAll({ page: query.page || 1, limit: query.limit || 10 });
   }
 
   @ApiOperation({ summary: '详细' })

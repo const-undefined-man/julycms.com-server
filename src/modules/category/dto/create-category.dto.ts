@@ -42,13 +42,7 @@ export class CreateCategoryDto {
   @ApiPropertyOptional({
     type: CreateAttachementDto,
     description: '栏目图片icon',
-    example: {
-      id: 1,
-      url: 'https://www.zhuolian.tech',
-      size: 1,
-      mimetype: '',
-      operatorType: 1,
-    },
+    example: { id: 1, url: 'https://www.zhuolian.tech' },
   })
   @Type(() => CreateAttachementDto)
   imgIcon: CreateAttachementDto;
@@ -56,13 +50,7 @@ export class CreateCategoryDto {
   @ApiPropertyOptional({
     type: CreateAttachementDto,
     description: '栏目封面',
-    example: {
-      id: 1,
-      url: 'https://www.zhuolian.tech',
-      size: 1,
-      mimetype: '',
-      operatorType: 1,
-    },
+    example: { id: 1, url: 'https://www.zhuolian.tech' },
   })
   @Type(() => CreateAttachementDto)
   cover: CreateAttachementDto;

@@ -8,7 +8,6 @@ import {
   Delete,
   ParseIntPipe,
   Query,
-  DefaultValuePipe,
   SetMetadata,
 } from '@nestjs/common';
 import { TagService } from '@app/modules/tag/tag.service';
@@ -17,12 +16,12 @@ import { UpdateTagDto } from '@app/modules/tag/dto/update-tag.dto';
 import {
   ApiBearerAuth,
   ApiOperation,
-  ApiQuery,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import { VerifyPermission, ReflectMetadataKeys } from '@app/common';
 import { Tag } from '@app/modules/tag/entities/tag.entity';
+import { QueryTagDto } from '@app/modules/tag/dto/query-tag.dto';
 
 @ApiTags('标签管理')
 @ApiBearerAuth()
@@ -41,36 +40,11 @@ export class TagController {
 
   @ApiOperation({ summary: '列表' })
   @ApiResponse({ status: 200, description: '200', type: [Tag] })
-  @ApiQuery({
-    name: 'page',
-    required: false,
-    description: '第几页',
-    type: Number,
-    example: 1,
-  })
-  @ApiQuery({
-    name: 'limit',
-    required: false,
-    description: '每页显示数',
-    type: Number,
-    example: 10,
-  })
-  @ApiQuery({
-    name: 'title',
-    required: false,
-    description: '标题',
-    type: String,
-    example: '标题',
-  })
   @SetMetadata(ReflectMetadataKeys.ACTION_NAME, '列表')
   @Get()
   @VerifyPermission('content:tag:query')
-  findAll(
-    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
-    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit = 10,
-    @Query('name') name: string,
-  ) {
-    return this.tagService.findAll({ page, limit }, {name});
+  findAll(@Query() query: QueryTagDto) {
+    return this.tagService.findAll(query);
   }
 
   @ApiOperation({ summary: '详细' })

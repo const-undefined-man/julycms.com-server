@@ -8,8 +8,8 @@ import { BusinessException } from '@app/common';
 import * as fs from 'fs';
 import * as path from 'path';
 import { IPaginationOptions, paginate } from 'nestjs-typeorm-paginate';
-import { queryParams } from './type';
 import { Manager } from '../manager/entities/manager.entity';
+import { QueryAttachementDto } from './dto/query-attachement.dto';
 
 @Injectable()
 export class AttachementService {
@@ -32,7 +32,7 @@ export class AttachementService {
       if (attachement.id) {
         const atta = await this.findOne(attachement.id);
         const filePath = path.join(__dirname, atta.url);
-        await fs.unlinkSync(filePath);
+        fs.unlinkSync(filePath);
         this.attachement.remove(atta);
       }
 
@@ -46,22 +46,26 @@ export class AttachementService {
     return this.attachement.save(datas);
   }
 
-  async findAll(options: IPaginationOptions, wheres: queryParams) {
+  async findAll(query: QueryAttachementDto) {
+    const ipagination: IPaginationOptions = {
+      page: query.page,
+      limit: query.limit,
+    };
     const where: FindOptionsWhere<Attachement> = {};
-    if (wheres.id) {
-      where.id = wheres.id;
+    if (query.id) {
+      where.id = query.id;
     }
-    if (wheres.size) {
-      where.size = Between(wheres.size[0], wheres.size[1]);
+    if (query.size) {
+      where.size = Between(query.size[0], query.size[1]);
     }
-    if (wheres.operatorId) {
-      where.operatorId = wheres.operatorId;
+    if (query.operatorId) {
+      where.operatorId = query.operatorId;
     }
-    if (wheres.createdAt) {
-      where.createdAt = Between(wheres.createdAt[0], wheres.createdAt[1]);
+    if (query.createdAt) {
+      where.createdAt = Between(query.createdAt[0], query.createdAt[1]);
     }
 
-    return paginate(this.attachement, options, {
+    return paginate(this.attachement, ipagination, {
       relations: ['operator'],
       where,
     });

@@ -1,6 +1,5 @@
 import { ReflectMetadataKeys } from '@app/common/constants';
 import { Menu } from '@app/modules/menu/entities/menu.entity';
-import { Role } from '@app/modules/role/entities/role.entity';
 import { RoleService } from '@app/modules/role/role.service';
 import {
   CanActivate,
@@ -12,19 +11,6 @@ import {
 import { Reflector } from '@nestjs/core';
 import { Request } from 'express';
 
-declare module 'express' {
-  interface Request {
-    user: {
-      // TOOD: 暂未使用 用户名
-      username: string;
-      // TOOD: 暂未使用 用户id
-      userid: number;
-      roles: number[];
-      isAdmin: number;
-    };
-  }
-}
-
 @Injectable()
 export class PermissionGuard implements CanActivate {
   @Inject(RoleService)
@@ -35,10 +21,15 @@ export class PermissionGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     // 开放守卫路由
-    const request: Request = context.switchToHttp().getRequest();
-    if (request.url.startsWith('/api/pc')) {
+    const isPublic = this.reflector.getAllAndOverride<boolean>(
+      ReflectMetadataKeys.IS_PUBLIC_KEY,
+      [context.getHandler(), context.getClass()],
+    );
+    if (isPublic) {
       return true;
     }
+
+    const request: Request = context.switchToHttp().getRequest();
     if (!request.user || request.user.isAdmin) {
       return true;
     }
@@ -60,7 +51,6 @@ export class PermissionGuard implements CanActivate {
     }
 
     const roles = await this.roleService.findByIds(roleIds);
-    console.log(request.user, roles);
     const menus: Menu[] = roles.reduce((total, current) => {
       total.push(...current.menus);
       return total;

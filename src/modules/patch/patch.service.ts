@@ -19,6 +19,7 @@ import { Manager } from '../manager/entities/manager.entity';
 import { existsSync, unlinkSync } from 'fs';
 import * as path from 'path';
 import { isNotEmptyObject } from 'class-validator';
+import { QueryPatchDto } from './dto/query-patch.dto';
 
 @Injectable()
 export class PatchService {
@@ -54,31 +55,31 @@ export class PatchService {
     return this.patch.save(patch);
   }
 
-  async findAll(options: IPaginationOptions, wheres: queryParams) {
+  async findAll(query: QueryPatchDto) {
     const where: queryParams = {};
-    if (wheres.id) {
-      where.id = wheres.id;
+    if (query.id) {
+      where.id = query.id;
     }
-    if (wheres.title) {
-      where.title = Like(`%${wheres.title}%`);
+    if (query.title) {
+      where.title = Like(`%${query.title}%`);
     }
-    if (wheres.type) {
-      where.type = wheres.type;
+    if (query.type) {
+      where.type = query.type;
     }
     const [items, total] = await this.patch
       .createQueryBuilder('patch')
       .leftJoinAndSelect('patch.manager', 'manager')
       .where(where)
-      .skip((Number(options.page) - 1) * Number(options.limit))
-      .take(Number(options.limit))
+      .skip((Number(query.page || 1) - 1) * Number(query.limit || 10))
+      .take(Number(query.limit || 10))
       .getManyAndCount();
 
     return {
       items,
       meta: {
         totalItems: total,
-        currentPage: options.page,
-        perPage: options.limit,
+        currentPage: query.page || 1,
+        perPage: query.limit || 10,
       },
     };
   }
@@ -170,21 +171,10 @@ export class PatchService {
       (v) => (patchList[v] = createPatchListDto[v]),
     );
 
-    if (isNotEmptyObject(createPatchListDto.img)) {
-      const { url, size, mimetype } = createPatchListDto.img;
-      if (url) {
-        const attachement = new Attachement();
-        attachement.url = url;
-        attachement.size = size;
-        attachement.mimetype = mimetype;
-        attachement.operatorType = 1;
-
-        const manager = new Manager();
-        manager.id = managerId;
-        attachement.operator = manager;
-
-        patchList.img = attachement;
-      }
+    if (isNotEmptyObject(createPatchListDto.img) && createPatchListDto.img.id) {
+      const attachement = new Attachement();
+      attachement.id = createPatchListDto.img.id;
+      patchList.img = attachement;
     }
 
     const patch = new Patch();
@@ -203,27 +193,15 @@ export class PatchService {
       (v) => (patchList[v] = updatePatchListDto[v]),
     );
 
-    if (isNotEmptyObject(updatePatchListDto.img)) {
+    if (isNotEmptyObject(updatePatchListDto.img) && updatePatchListDto.img.id) {
       const attachement = new Attachement();
-      const { id, url, size, mimetype } = updatePatchListDto.img;
+      const { id, url } = updatePatchListDto.img;
 
-      if (id) {
-        attachement.id = id;
-        // 如果ID存在，说明是修改；先删除之前的附件，再保存新的附件
+      const oldIcon = await this.attachementService.findOne(id);
+      if (oldIcon.url !== url) {
         await this.attachementService.removeFile(id);
       }
-      if (url) {
-        attachement.url = url;
-        attachement.size = size;
-        attachement.mimetype = mimetype;
-        attachement.operatorType = 1;
-
-        const manager = new Manager();
-        manager.id = managerId;
-        attachement.operator = manager;
-
-        patchList.img = attachement;
-      }
+      patchList.img = attachement;
     }
 
     return this.patchList.save(patchList);

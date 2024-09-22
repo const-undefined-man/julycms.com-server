@@ -7,8 +7,6 @@ import {
   Delete,
   SetMetadata,
   Query,
-  DefaultValuePipe,
-  ParseIntPipe,
   Patch,
 } from '@nestjs/common';
 import { OperationLogService } from '@app/modules/operation-log/operation-log.service';
@@ -18,13 +16,12 @@ import {
   ApiBearerAuth,
   ApiBody,
   ApiOperation,
-  ApiQuery,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { queryParams } from '@app/modules/operation-log/type';
 import { BatchRemoveDto } from '@app/modules/operation-log/dto/batch-remove.dto';
 import { OperationLog } from '@app/modules/operation-log/entities/operation-log.entity';
+import { QueryLogDto } from '@app/modules/login-log/dto/query-log-dto';
 
 @ApiTags('操作日志')
 @ApiBearerAuth()
@@ -41,40 +38,10 @@ export class OperationLogController {
 
   @ApiOperation({ summary: '列表' })
   @ApiResponse({ status: 200, description: '200', type: [OperationLog] })
-  @ApiQuery({
-    name: 'page',
-    required: true,
-    description: '第几页',
-    type: Number,
-    example: 1,
-  })
-  @ApiQuery({
-    name: 'limit',
-    required: true,
-    description: '每页显示数',
-    type: Number,
-    example: 10,
-  })
-  @ApiQuery({
-    name: 'username',
-    required: false,
-    description: '操作人',
-    type: String,
-  })
-  @ApiQuery({
-    name: 'createdAt',
-    required: false,
-    description: '创建时间',
-    type: Array,
-  })
   @Get()
   @VerifyPermission('system:operation-log:query')
-  findAll(
-    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
-    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit = 10,
-    @Query() params: queryParams,
-  ) {
-    return this.operationLogService.findAll({ page, limit }, params);
+  findAll(@Query() query: QueryLogDto) {
+    return this.operationLogService.findAll(query);
   }
 
   @ApiOperation({ summary: '清除' })

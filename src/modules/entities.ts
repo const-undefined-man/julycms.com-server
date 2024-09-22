@@ -4,7 +4,6 @@ import { Counter } from './counter/entities/counter.entity';
 import { Dict } from './dict/entities/dict.entity';
 import { DictValue } from './dict-value/entities/dict-value.entity';
 import { Document } from './document/entities/document.entity';
-import { Album } from './document/entities/album.entity';
 import { Content } from './document/entities/content.entity';
 import { Link } from './document/entities/link.entity';
 import { LoginLog } from './login-log/entities/login-log.entity';
@@ -27,7 +26,6 @@ export default [
   Dict,
   DictValue,
   Document,
-  Album,
   Content,
   Link,
   LoginLog,

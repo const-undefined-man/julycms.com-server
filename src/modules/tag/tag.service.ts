@@ -3,9 +3,10 @@ import { CreateTagDto } from './dto/create-tag.dto';
 import { UpdateTagDto } from './dto/update-tag.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Tag } from './entities/tag.entity';
-import { Like, Or, Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { IPaginationOptions, paginate } from 'nestjs-typeorm-paginate';
 import { BusinessException } from '@app/common';
+import { QueryTagDto } from './dto/query-tag.dto';
 
 @Injectable()
 export class TagService {
@@ -26,15 +27,19 @@ export class TagService {
     return this.tag.save(data);
   }
 
-  findAll(options: IPaginationOptions, wheres) {
-    let where: any = [];
-    if (wheres.name) {
+  findAll(query: QueryTagDto) {
+    const options: IPaginationOptions = {
+      page: query.page | 1,
+      limit: query.limit | 10,
+    };
+    let where: Record<string, any> = [];
+    if (query.name) {
       where = [
-        { name: Like(`%${wheres.name}%`) },
-        { pinyin: Like(`%${wheres.name}%`) }
+        { name: Like(`%${query.name}%`) },
+        { pinyin: Like(`%${query.name}%`) }
       ]
     }
-    return paginate(this.tag, options, {where});
+    return paginate(this.tag, options, { where });
   }
 
   findOne(id: number) {

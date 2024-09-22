@@ -8,7 +8,6 @@ import { CreateDocumentDto } from './dto/create-document.dto';
 import { UpdateDocumentDto } from './dto/update-document.dto';
 import { Category } from '../category/entities/category.entity';
 import { Document } from './entities/document.entity';
-import { Album } from './entities/album.entity';
 import { Tag } from '../tag/entities/tag.entity';
 import { Content } from './entities/content.entity';
 import { Attachement } from '../attachement/entities/attachement.entity';
@@ -23,7 +22,6 @@ import { CategoryService } from '../category/category.service';
 export class DocumentService {
   constructor(
     @InjectRepository(Document) private readonly document: Repository<Document>,
-    @InjectRepository(Album) private readonly album: Repository<Album>,
     private readonly categoryService: CategoryService,
     private readonly counterService: CounterService,
     private readonly attachementService: AttachementService,
@@ -54,22 +52,13 @@ export class DocumentService {
     document.category = category;
 
     // 关联附件-文章封面
-    if (isNotEmptyObject(createDocumentDto.cover)) {
-      const { url, size, mimetype } = createDocumentDto.cover;
-      if (url) {
-        // TODO: 附件逻辑优化
-        const attachement = new Attachement();
-        attachement.url = url;
-        attachement.size = size;
-        attachement.mimetype = mimetype;
-        attachement.operatorType = 1;
+    if (isNotEmptyObject(createDocumentDto.cover) && createDocumentDto.cover.id) {
+      const { id } = createDocumentDto.cover;
 
-        const manager = new Manager();
-        manager.id = managerId;
-        attachement.operator = manager;
+      const attachement = new Attachement();
+      attachement.id = id;
 
-        document.cover = attachement;
-      }
+      document.cover = attachement;
     }
 
     // tag
@@ -94,33 +83,6 @@ export class DocumentService {
       document.content = content;
     }
 
-    // album
-    if (createDocumentDto.albums) {
-      const albums = [];
-      createDocumentDto.albums.forEach((v) => {
-        const album = new Album();
-        album.listorder = v.listorder;
-        album.description = v.description;
-
-        if (isNotEmptyObject(v.img)) {
-          const { url, size, mimetype } = v.img;
-          const attachement = new Attachement();
-          attachement.url = url;
-          attachement.size = size;
-          attachement.mimetype = mimetype;
-          attachement.operatorType = 1;
-
-          const manager = new Manager();
-          manager.id = managerId;
-          attachement.operator = manager;
-
-          album.img = attachement;
-        }
-
-        albums.push(album);
-      });
-      document.albums = albums;
-    }
     // console.log('createDocumentDto', createDocumentDto);
     // link
     if (createDocumentDto.link) {
@@ -154,7 +116,7 @@ export class DocumentService {
     }
     return paginate(this.document, options, {
       where,
-      relations: ['cover', 'link', 'albums'],
+      relations: ['cover', 'link'],
     });
   }
 
@@ -191,11 +153,7 @@ export class DocumentService {
     if (!content) {
       return null;
     }
-    const albums = await this.album.find({
-      where: { document: { id } },
-      relations: ['img'],
-    });
-    content.albums = albums;
+
     return content;
   }
 
@@ -233,28 +191,17 @@ export class DocumentService {
     document.category = category;
 
     // 关联附件-文章封面
-    if (isNotEmptyObject(updateDocumentDto.cover)) {
+    if (isNotEmptyObject(updateDocumentDto.cover) && updateDocumentDto.cover) {
       const attachement = new Attachement();
-      const { id, url, size, mimetype } = updateDocumentDto.cover;
-      if (id) {
-        attachement.id = id;
-        const oldCover = await this.attachementService.findOne(id);
-        if (oldCover.url !== url) {
-          await this.attachementService.removeFile(id);
-        }
-      }
-      if (url) {
-        attachement.url = url;
-        attachement.size = size;
-        attachement.mimetype = mimetype;
-        attachement.operatorType = 1;
+      const { id, url } = updateDocumentDto.cover;
 
-        const manager = new Manager();
-        manager.id = managerId;
-        attachement.operator = manager;
-
-        document.cover = attachement;
+      attachement.id = id;
+      const oldCover = await this.attachementService.findOne(id);
+      if (oldCover.url !== url) {
+        await this.attachementService.removeFile(id);
       }
+
+      document.cover = attachement;
     }
 
     // tag
@@ -279,35 +226,6 @@ export class DocumentService {
       );
       content.content = text;
       document.content = content;
-    }
-
-    // album
-    if (updateDocumentDto.albums) {
-      const albums = [];
-      updateDocumentDto.albums.forEach((v) => {
-        const album = new Album();
-        album.id = v.id;
-        album.listorder = v.listorder;
-        album.description = v.description;
-
-        if (isNotEmptyObject(v.img)) {
-          const { url, size, mimetype } = v.img;
-          const attachement = new Attachement();
-          attachement.url = url;
-          attachement.size = size;
-          attachement.mimetype = mimetype;
-          attachement.operatorType = 1;
-
-          const manager = new Manager();
-          manager.id = managerId;
-          attachement.operator = manager;
-
-          album.img = attachement;
-        }
-
-        albums.push(album);
-      });
-      document.albums = albums;
     }
 
     // link

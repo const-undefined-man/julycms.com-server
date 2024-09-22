@@ -13,7 +13,6 @@ import { CommonEntity } from '@app/modules/common-entity';
 import { Tag } from '@app/modules/tag/entities/tag.entity';
 import { Attachement } from '@app/modules/attachement/entities/attachement.entity';
 import { Content } from './content.entity';
-import { Album } from './album.entity';
 import { Link } from './link.entity';
 import { Counter } from '@app/modules/counter/entities/counter.entity';
 import { ApiPropertyOptional } from '@nestjs/swagger';
@@ -37,7 +36,6 @@ export class Document extends CommonEntity {
   tags: Tag[];
 
   // 封面图片
-  // @Column({ type: 'varchar', length: 255, nullable: true, comment: '封面图片' })
   @ApiPropertyOptional({ description: '封面图片', type: Attachement })
   @OneToOne(() => Attachement, (attachement) => attachement.document, {
     cascade: true,
@@ -88,13 +86,6 @@ export class Document extends CommonEntity {
   })
   @JoinColumn()
   content: Content;
-
-  @ApiPropertyOptional({ description: '相册', type: [Album] })
-  @OneToMany(() => Album, (album) => album.document, {
-    cascade: true,
-    createForeignKeyConstraints: false,
-  })
-  albums: Album[];
 
   @ApiPropertyOptional({ description: '链接', type: Link })
   @OneToOne(() => Link, (link) => link.document, {

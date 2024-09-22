@@ -8,7 +8,6 @@ import {
   Delete,
   ParseIntPipe,
   Query,
-  DefaultValuePipe,
   SetMetadata,
 } from '@nestjs/common';
 import { RoleService } from '@app/modules/role/role.service';
@@ -17,12 +16,12 @@ import { UpdateRoleDto } from '@app/modules/role/dto/update-role.dto';
 import {
   ApiBearerAuth,
   ApiOperation,
-  ApiQuery,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import { VerifyPermission, ReflectMetadataKeys } from '@app/common';
 import { Role } from '@app/modules/role/entities/role.entity';
+import { QueryRoleDto } from '@app/modules/role/dto/query-role.dto';
 
 @ApiTags('角色管理')
 @ApiBearerAuth()
@@ -41,28 +40,11 @@ export class RoleController {
 
   @ApiOperation({ summary: '列表' })
   @ApiResponse({ status: 200, description: '200', type: [Role] })
-  @ApiQuery({
-    name: 'page',
-    required: false,
-    description: '第几页',
-    type: Number,
-    example: 1,
-  })
-  @ApiQuery({
-    name: 'limit',
-    required: false,
-    description: '每页显示数',
-    type: Number,
-    example: 10,
-  })
   @SetMetadata(ReflectMetadataKeys.ACTION_NAME, '列表')
   @Get()
   @VerifyPermission('system:role:query')
-  findAll(
-    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
-    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit = 10,
-  ) {
-    return this.roleService.findAll({ page, limit });
+  findAll(@Query() queryRoleDto: QueryRoleDto) {
+    return this.roleService.findAll(queryRoleDto);
   }
 
   @ApiOperation({ summary: '详细' })

@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { OperationLog } from './entities/operation-log.entity';
 import { Between, FindOptionsWhere, In, Repository } from 'typeorm';
 import { IPaginationOptions, paginate } from 'nestjs-typeorm-paginate';
-import { queryParams } from './type';
+import { QueryLogDto } from '../login-log/dto/query-log-dto';
 
 @Injectable()
 export class OperationLogService {
@@ -15,13 +15,17 @@ export class OperationLogService {
     return this.operationLog.save(createOperationLogDto);
   }
 
-  findAll(options: IPaginationOptions, wheres: queryParams) {
-    const where: FindOptionsWhere<OperationLog> = {};
-    if (wheres.username) {
-      where.username = wheres.username;
+  findAll(query: QueryLogDto) {
+    const options: IPaginationOptions = {
+      page: query.page,
+      limit: query.limit,
     }
-    if (wheres.createdAt) {
-      where.createdAt = Between(wheres.createdAt[0], wheres.createdAt[1]);
+    const where: FindOptionsWhere<OperationLog> = {};
+    if (query.username) {
+      where.username = query.username;
+    }
+    if (query.createdAt) {
+      where.createdAt = Between(query.createdAt[0], query.createdAt[1]);
     }
     return paginate(this.operationLog, options, { where });
   }

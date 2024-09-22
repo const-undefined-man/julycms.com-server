@@ -11,7 +11,6 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { Content } from '../entities/content.entity';
-import { Album } from '../entities/album.entity';
 import { Attachement } from '@app/modules/attachement/entities/attachement.entity';
 import { LinkDto } from './link.dto';
 import { Type } from 'class-transformer';
@@ -75,14 +74,6 @@ export class CreateDocumentDto {
   @IsOptional()
   @IsNotEmpty({ message: 'common.IsNotEmpty' })
   content?: Content;
-
-  @ApiPropertyOptional({
-    description: '图集',
-    example: [{ listorder: 1, img: '', description: '' }],
-  })
-  @IsOptional()
-  @IsArray({ message: 'common.IsArray' })
-  albums?: Album[];
 
   @ApiPropertyOptional({
     type: () => LinkDto,

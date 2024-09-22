@@ -45,41 +45,19 @@ export class CategoryService {
     }
 
     // 关联附件-栏目封面
-    if (isNotEmptyObject(cover)) {
-      const { url, size, mimetype } = cover;
-
-      if (url) {
+    if (isNotEmptyObject(cover) && cover.id) {
         const attachement = new Attachement();
-        attachement.url = url;
-        attachement.size = size;
-        attachement.mimetype = mimetype;
-        attachement.operatorType = 1;
-
-        const manager = new Manager();
-        manager.id = managerId;
-        attachement.operator = manager;
+        attachement.id = cover.id;
 
         data.cover = attachement;
-      }
     }
 
     // 关联附件-栏目图片icon
-    if (isNotEmptyObject(imgIcon)) {
-      const { url, size, mimetype } = imgIcon;
-
-      if (url) {
+    if (isNotEmptyObject(imgIcon) && imgIcon.id) {
         const attachement = new Attachement();
-        attachement.url = url;
-        attachement.size = size;
-        attachement.mimetype = mimetype;
-        attachement.operatorType = 1;
-
-        const manager = new Manager();
-        manager.id = managerId;
-        attachement.operator = manager;
+        attachement.id = imgIcon.id;
 
         data.imgIcon = attachement;
-      }
     }
 
     // parent
@@ -138,51 +116,28 @@ export class CategoryService {
     }
 
     // 关联附件-栏目封面
-    if (isNotEmptyObject(cover)) {
+    if (isNotEmptyObject(cover) && cover.id) {
       const attachement = new Attachement();
-      const { id, url, size, mimetype } = cover;
 
-      if (id) {
-        attachement.id = id;
-        const oldCover = await this.attachementService.findOne(id);
-        if (oldCover.url !== url) {
-          await this.attachementService.removeFile(id);
-        }
+      attachement.id = cover.id;
+      const oldCover = await this.attachementService.findOne(cover.id);
+      if (oldCover.url !== cover.url) {
+        await this.attachementService.removeFile(cover.id);
       }
-
-      attachement.url = url;
-      attachement.size = size;
-      attachement.mimetype = mimetype;
-      attachement.operatorType = 1;
-
-      const manager = new Manager();
-      manager.id = managerId;
-      attachement.operator = manager;
 
       data.cover = attachement;
     }
 
     // 关联附件-栏目图片icon
-    if (isNotEmptyObject(imgIcon)) {
+    if (isNotEmptyObject(imgIcon) && imgIcon.id) {
       const attachement = new Attachement();
-      const { id, url, size, mimetype } = imgIcon;
+      const { id, url } = imgIcon;
 
-      if (id) {
-        attachement.id = id;
-        const oldIcon = await this.attachementService.findOne(id);
-        if (oldIcon.url !== url) {
-          await this.attachementService.removeFile(id);
-        }
+      attachement.id = id;
+      const oldIcon = await this.attachementService.findOne(id);
+      if (oldIcon.url !== url) {
+        await this.attachementService.removeFile(id);
       }
-
-      attachement.url = url;
-      attachement.size = size;
-      attachement.mimetype = mimetype;
-      attachement.operatorType = 1;
-
-      const manager = new Manager();
-      manager.id = managerId;
-      attachement.operator = manager;
 
       data.imgIcon = attachement;
     }

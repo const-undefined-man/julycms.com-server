@@ -1,6 +1,5 @@
 import {
   Controller,
-  DefaultValuePipe,
   Get,
   NotFoundException,
   Param,
@@ -9,9 +8,9 @@ import {
 } from '@nestjs/common';
 import { CategoryService } from '@app/modules/category/category.service';
 import { DocumentService } from '@app/modules/document/document.service';
-import { BusinessException } from '@app/common';
+import { BusinessException, Public } from '@app/common';
 import { SiteSettingService } from '@app/modules/site-setting/site-setting.service';
-import { ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { PatchService } from '@app/modules/patch/patch.service';
 import { NavContentVo } from './vo/nav.content.vo';
 import { CounterService } from '@app/modules/counter/counter.service';
@@ -19,8 +18,10 @@ import { SeoVO } from './vo/seo.vo';
 import { Category } from '@app/modules/category/entities/category.entity';
 import { Document } from '@app/modules/document/entities/document.entity';
 import { Patch } from '@app/modules/patch/entities/patch.entity';
+import { QueryDto } from '@app/modules/query-dto';
 
 @ApiTags('PC 端')
+@Public()
 @Controller('api/pc')
 export class PcController {
   constructor(
@@ -87,25 +88,10 @@ export class PcController {
    * @returns Object || Array
    */
   @ApiResponse({ status: 200, type: NavContentVo })
-  @ApiQuery({
-    name: 'page',
-    required: false,
-    description: '第几页',
-    type: Number,
-    example: 1,
-  })
-  @ApiQuery({
-    name: 'limit',
-    required: false,
-    description: '每页显示数',
-    type: Number,
-    example: 10,
-  })
   @Get('nav-content/:catdir')
   async navContent(
     @Param('catdir') catdir: string,
-    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
-    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit = 10,
+    @Query() query: QueryDto,
   ) {
     const cateinfo = await this.categoryService.findOneByCatdir(catdir, [
       'siteModel',
@@ -149,7 +135,7 @@ export class PcController {
 
       const list = await this.documentService.findAllList(
         ids,
-        { page, limit },
+        { page: query.page || 1, limit: query.limit || 10 },
         { display: 1 },
       );
 

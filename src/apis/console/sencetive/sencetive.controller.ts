@@ -8,7 +8,6 @@ import {
   Delete,
   ParseIntPipe,
   Query,
-  DefaultValuePipe,
   ParseArrayPipe,
   SetMetadata,
 } from '@nestjs/common';
@@ -16,7 +15,6 @@ import {
   ApiBearerAuth,
   ApiBody,
   ApiOperation,
-  ApiQuery,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
@@ -26,6 +24,7 @@ import { CreateSencetiveDto } from '@app/modules/sencetive/dto/create-sencetive.
 import { UpdateSencetiveDto } from '@app/modules/sencetive/dto/update-sencetive.dto';
 import { Sencetive } from '@app/modules/sencetive/entities/sencetive.entity';
 import { BatchRemoveDto } from '@app/common/dto/batch-remove.dto';
+import { QueryDto } from '@app/modules/query-dto';
 
 @ApiTags('敏感词')
 @ApiBearerAuth()
@@ -45,28 +44,11 @@ export class SencetiveController {
 
   @ApiOperation({ summary: '列表' })
   @ApiResponse({ status: 200, description: '200', type: [Sencetive] })
-  @ApiQuery({
-    name: 'page',
-    required: false,
-    description: '第几页',
-    type: Number,
-    example: 1,
-  })
-  @ApiQuery({
-    name: 'limit',
-    required: false,
-    description: '每页显示数',
-    type: Number,
-    example: 10,
-  })
   @SetMetadata(ReflectMetadataKeys.ACTION_NAME, '列表')
   @Get()
   @VerifyPermission('site:sencetive:query')
-  findAll(
-    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
-    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit = 10,
-  ) {
-    return this.sencetiveService.findAll({ page, limit });
+  findAll(@Query() query: QueryDto) {
+    return this.sencetiveService.findAll({ page: query.page || 1, limit: query.limit || 10 });
   }
 
   @ApiOperation({ summary: '详细' })

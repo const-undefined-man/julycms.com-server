@@ -7,7 +7,6 @@ import {
   Param,
   Delete,
   Query,
-  DefaultValuePipe,
   ParseIntPipe,
   Req,
   SetMetadata,
@@ -23,7 +22,6 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { queryParams } from '@app/modules/patch/type';
 import { UpdatePatchTextDto } from '@app/modules/patch/dto/update-patch-text.dto';
 import { CreatePatchListDto } from '@app/modules/patch/dto/create-patch-list.dto';
 import { UpdatePatchListDto } from '@app/modules/patch/dto/update-patch-list.dto';
@@ -32,6 +30,7 @@ import { BatchRemoveDto } from '@app/common/dto/batch-remove.dto';
 import { VerifyPermission, ReflectMetadataKeys } from '@app/common';
 import { Patch as PatchDto } from '@app/modules/patch/entities/patch.entity';
 import { PatchList } from '@app/modules/patch/entities/patch-list.entity';
+import { QueryPatchDto } from '@app/modules/patch/dto/query-patch.dto';
 
 @ApiTags('碎片管理')
 @ApiBearerAuth()
@@ -51,41 +50,10 @@ export class PatchController {
   @ApiOperation({ summary: '列表' })
   @ApiResponse({ status: 200, description: '200', type: [PatchDto] })
   @SetMetadata(ReflectMetadataKeys.ACTION_NAME, '列表')
-  @ApiQuery({
-    name: 'page',
-    required: true,
-    description: '第几页',
-    type: Number,
-    example: 1,
-  })
-  @ApiQuery({
-    name: 'limit',
-    required: true,
-    description: '每页显示数',
-    type: Number,
-    example: 10,
-  })
-  @ApiQuery({ name: 'id', required: false, description: 'ID', type: Number })
-  @ApiQuery({
-    name: 'title',
-    required: false,
-    description: '标题',
-    type: String,
-  })
-  @ApiQuery({
-    name: 'type',
-    required: false,
-    description: '类型',
-    type: Number,
-  })
   @Get()
   @VerifyPermission('content:patch:query')
-  findAll(
-    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
-    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit = 10,
-    @Query() params: queryParams,
-  ) {
-    return this.patchService.findAll({ page, limit }, params);
+  findAll(@Query() query: QueryPatchDto) {
+    return this.patchService.findAll(query);
   }
 
   @ApiOperation({ summary: '修改' })

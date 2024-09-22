@@ -7,7 +7,6 @@ import {
   Param,
   Delete,
   Query,
-  DefaultValuePipe,
   ParseIntPipe,
   SetMetadata,
 } from '@nestjs/common';
@@ -17,12 +16,12 @@ import { UpdateDictDto } from '@app/modules/dict/dto/update-dict.dto';
 import {
   ApiBearerAuth,
   ApiOperation,
-  ApiQuery,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import { VerifyPermission, ReflectMetadataKeys } from '@app/common';
 import { Dict } from '@app/modules/dict/entities/dict.entity';
+import { QueryDto } from '@app/modules/query-dto';
 
 @ApiTags('枚举管理')
 @ApiBearerAuth()
@@ -41,28 +40,11 @@ export class DictController {
 
   @ApiOperation({ summary: '列表' })
   @ApiResponse({ status: 200, description: '200', type: [Dict] })
-  @ApiQuery({
-    name: 'page',
-    required: false,
-    description: '第几页',
-    type: Number,
-    example: 1,
-  })
-  @ApiQuery({
-    name: 'limit',
-    required: false,
-    description: '每页显示数',
-    type: Number,
-    example: 10,
-  })
   @SetMetadata(ReflectMetadataKeys.ACTION_NAME, '列表')
   @Get()
   @VerifyPermission('system:dict:query')
-  findAll(
-    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
-    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit = 10,
-  ) {
-    return this.dictService.findAll({ page, limit });
+  findAll(@Query() query: QueryDto) {
+    return this.dictService.findAll(query);
   }
 
   @ApiOperation({ summary: '详细' })

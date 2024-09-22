@@ -2,7 +2,6 @@ import { Category } from '@app/modules/category/entities/category.entity';
 import { Manager } from '@app/modules/manager/entities/manager.entity';
 import { Document } from '@app/modules/document/entities/document.entity';
 import { Column, Entity, ManyToOne, OneToOne } from 'typeorm';
-import { Album } from '@app/modules/document/entities/album.entity';
 import { PatchList } from '@app/modules/patch/entities/patch-list.entity';
 import { CommonEntity } from '@app/modules/common-entity';
 import { ApiPropertyOptional } from '@nestjs/swagger';
@@ -21,7 +20,7 @@ export class Attachement extends CommonEntity {
   @Column({ type: 'varchar', nullable: true, comment: '文件类型', length: 255 })
   mimetype: string | null;
 
-  @ApiPropertyOptional({ description: '操作人类型；0 未知； 1 管理员；2 用户' })
+  @ApiPropertyOptional({ description: '操作人类型；0 未知； 1 管理员；2 用户', default: 1 })
   @Column({
     type: 'tinyint',
     width: 1,
@@ -65,11 +64,7 @@ export class Attachement extends CommonEntity {
   @OneToOne(() => Document, (document) => document.cover)
   document: Document;
 
-  @ApiPropertyOptional({ type: Album })
-  @OneToOne(() => Album, (album) => album.img)
-  album: Album;
-
   @ApiPropertyOptional({ type: PatchList })
   @OneToOne(() => PatchList, (patchList) => patchList.img)
-  patchList: Album;
+  patchList: PatchList;
 }

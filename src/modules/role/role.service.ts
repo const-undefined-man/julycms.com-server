@@ -3,10 +3,11 @@ import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Role } from './entities/role.entity';
-import { In, Repository } from 'typeorm';
+import { In, Like, Repository } from 'typeorm';
 import { paginate, IPaginationOptions } from 'nestjs-typeorm-paginate';
 import { $t, BusinessException } from '@app/common';
 import { Menu } from '../menu/entities/menu.entity';
+import { QueryRoleDto } from './dto/query-role.dto';
 
 @Injectable()
 export class RoleService {
@@ -43,8 +44,19 @@ export class RoleService {
     return this.role.save(role);
   }
 
-  findAll(options: IPaginationOptions) {
-    return paginate(this.role, options);
+  findAll(options: QueryRoleDto) {
+    const paginationMeta = {
+      page: options.page || 1,
+      limit: options.limit || 10,
+    }
+    let where: Record<string, any> = {};
+    if (options.display !== undefined) {
+      where.display = options.display;
+    }
+    if (options.name) {
+      where.name = Like(`%${options.name}%`);
+    }
+    return paginate(this.role, paginationMeta, {where});
   }
 
   findOne(id: number) {

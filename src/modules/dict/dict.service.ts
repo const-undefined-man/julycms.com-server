@@ -6,6 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { IPaginationOptions, paginate } from 'nestjs-typeorm-paginate';
 import { BusinessException } from '@app/common';
+import { QueryDto } from '../query-dto';
 
 @Injectable()
 export class DictService {
@@ -23,7 +24,8 @@ export class DictService {
     return this.dict.save(createEnumDto);
   }
 
-  findAll(options: IPaginationOptions) {
+  findAll({ page, limit }: QueryDto) {
+    const options: IPaginationOptions = { page, limit };
     return paginate(this.dict, options);
   }
 

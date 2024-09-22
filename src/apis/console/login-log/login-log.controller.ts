@@ -6,8 +6,6 @@ import {
   Param,
   Delete,
   Query,
-  DefaultValuePipe,
-  ParseIntPipe,
   SetMetadata,
   Patch,
 } from '@nestjs/common';
@@ -17,14 +15,13 @@ import {
   ApiBearerAuth,
   ApiBody,
   ApiOperation,
-  ApiQuery,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { queryParams } from '@app/modules/login-log/type';
 import { VerifyPermission, ReflectMetadataKeys } from '@app/common';
 import { BatchRemoveDto } from '@app/modules/login-log/dto/batch-remove.dto';
 import { LoginLog } from '@app/modules/login-log/entities/login-log.entity';
+import { QueryLogDto } from '@app/modules/login-log/dto/query-log-dto';
 
 @ApiTags('登录日志')
 @ApiBearerAuth()
@@ -43,40 +40,10 @@ export class LoginLogController {
   @ApiOperation({ summary: '列表' })
   @ApiResponse({ status: 200, description: '200', type: LoginLog })
   @SetMetadata(ReflectMetadataKeys.ACTION_NAME, '列表')
-  @ApiQuery({
-    name: 'page',
-    required: true,
-    description: '第几页',
-    type: Number,
-    example: 1,
-  })
-  @ApiQuery({
-    name: 'limit',
-    required: true,
-    description: '每页显示数',
-    type: Number,
-    example: 10,
-  })
-  @ApiQuery({
-    name: 'username',
-    required: false,
-    description: '操作人',
-    type: String,
-  })
-  @ApiQuery({
-    name: 'createdAt',
-    required: false,
-    description: '创建时间',
-    type: Array,
-  })
   @Get()
   @VerifyPermission('system:login-log:query')
-  findAll(
-    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
-    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit = 10,
-    @Query() params: queryParams,
-  ) {
-    return this.loginLogService.findAll({ page, limit }, params);
+  findAll(@Query() query: QueryLogDto) {
+    return this.loginLogService.findAll(query);
   }
 
   @ApiOperation({ summary: '清除' })

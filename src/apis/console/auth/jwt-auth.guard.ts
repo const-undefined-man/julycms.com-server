@@ -24,14 +24,13 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
       ReflectMetadataKeys.IS_PUBLIC_KEY,
       [context.getHandler(), context.getClass()],
     );
-    // 开放守卫路由
-    const request = context.switchToHttp().getRequest();
-    if (isPublic || request.url.startsWith('/api/pc')) {
+    if (isPublic) {
       return true;
     }
 
     const res = await super.canActivate(context);
     if (res) {
+      const request = context.switchToHttp().getRequest();
       const token = request.header('authorization').split(' ')[1];
       const isExist = await this.redis.sismember(RedisKeys.USER_TOKEN, token);
 
