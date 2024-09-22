@@ -42,9 +42,7 @@ import { join } from 'path';
         path: join(__dirname, '/i18n/'),
         watch: true,
       },
-      resolvers: [
-        new HeaderResolver(['x-lang']),
-      ],
+      resolvers: [new HeaderResolver(['x-lang'])],
     }),
 
     ...CommonModules,

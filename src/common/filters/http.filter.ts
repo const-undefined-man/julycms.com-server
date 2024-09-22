@@ -40,7 +40,7 @@ export class HttpFilter implements ExceptionFilter {
 
     // 参数错误拦截
     if (exception instanceof I18nValidationException) {
-      console.log('error', exception.errors)
+      console.log('error', exception.errors);
       response.status(HttpStatus.OK).send({
         data: null,
         code: status,

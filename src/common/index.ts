@@ -13,4 +13,4 @@ export * from './bootstrap';
 export * from './SwaggerInit';
 export * from './constants';
 export * from './redis/redis.module';
-export * from './helpers/i18n.helper'
+export * from './helpers/i18n.helper';

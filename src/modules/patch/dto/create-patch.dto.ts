@@ -5,7 +5,6 @@ import {
   IsOptional,
   Length,
   MaxLength,
-  ValidateNested,
 } from 'class-validator';
 import { CreatePatchTextDto } from './create-patch-text.dto';
 import { Type } from 'class-transformer';

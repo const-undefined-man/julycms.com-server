@@ -9,7 +9,6 @@ import { SiteModel } from '../site-model/entities/site-model.entity';
 import { AttachementService } from '../attachement/attachement.service';
 import { Attachement } from '../attachement/entities/attachement.entity';
 import { MoveCategoryDto } from './dto/move-category.dto';
-import { Manager } from '../manager/entities/manager.entity';
 import { isNotEmptyObject } from 'class-validator';
 
 @Injectable()
@@ -20,7 +19,7 @@ export class CategoryService {
     private readonly attachementService: AttachementService,
   ) {}
 
-  create(createCategoryDto: CreateCategoryDto, managerId: number) {
+  create(createCategoryDto: CreateCategoryDto) {
     const { parent, siteModel, cover, imgIcon } = createCategoryDto;
     const data = new Category();
     [
@@ -46,18 +45,18 @@ export class CategoryService {
 
     // 关联附件-栏目封面
     if (isNotEmptyObject(cover) && cover.id) {
-        const attachement = new Attachement();
-        attachement.id = cover.id;
+      const attachement = new Attachement();
+      attachement.id = cover.id;
 
-        data.cover = attachement;
+      data.cover = attachement;
     }
 
     // 关联附件-栏目图片icon
     if (isNotEmptyObject(imgIcon) && imgIcon.id) {
-        const attachement = new Attachement();
-        attachement.id = imgIcon.id;
+      const attachement = new Attachement();
+      attachement.id = imgIcon.id;
 
-        data.imgIcon = attachement;
+      data.imgIcon = attachement;
     }
 
     // parent
@@ -90,7 +89,7 @@ export class CategoryService {
     return this.category.findOneBy(where);
   }
 
-  async update(updateCategoryDto: UpdateCategoryDto, managerId: number) {
+  async update(updateCategoryDto: UpdateCategoryDto) {
     const { parent, siteModel, cover, imgIcon } = updateCategoryDto;
     const data = new Category();
     [

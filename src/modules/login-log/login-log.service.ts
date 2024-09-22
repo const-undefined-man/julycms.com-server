@@ -24,7 +24,7 @@ export class LoginLogService {
     const options: IPaginationOptions = {
       page: query.page,
       limit: query.limit,
-    }
+    };
     const where: FindOptionsWhere<LoginLog> = {};
     if (query.username) {
       where.username = query.username;

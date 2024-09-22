@@ -131,22 +131,16 @@ export class PatchController {
   @SetMetadata(ReflectMetadataKeys.ACTION_NAME, '碎片 - 列表 添加')
   @Post('list')
   @VerifyPermission('content:patch:listCreate')
-  createPatchList(@Body() createPatchListDto: CreatePatchListDto, @Req() req) {
-    return this.patchService.createPatchList(
-      createPatchListDto,
-      req.user.userId,
-    );
+  createPatchList(@Body() createPatchListDto: CreatePatchListDto) {
+    return this.patchService.createPatchList(createPatchListDto);
   }
 
   @ApiOperation({ summary: '碎片 - 列表 修改' })
   @SetMetadata(ReflectMetadataKeys.ACTION_NAME, '碎片 - 列表 修改')
   @Patch('list')
   @VerifyPermission('content:patch:listUpdate')
-  updatePatchList(@Body() updatePatchListDto: UpdatePatchListDto, @Req() req) {
-    return this.patchService.updatePatchList(
-      updatePatchListDto,
-      req.user.userId,
-    );
+  updatePatchList(@Body() updatePatchListDto: UpdatePatchListDto) {
+    return this.patchService.updatePatchList(updatePatchListDto);
   }
 
   @ApiOperation({ summary: '碎片 - 列表 删除' })

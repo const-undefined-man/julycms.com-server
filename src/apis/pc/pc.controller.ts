@@ -89,10 +89,7 @@ export class PcController {
    */
   @ApiResponse({ status: 200, type: NavContentVo })
   @Get('nav-content/:catdir')
-  async navContent(
-    @Param('catdir') catdir: string,
-    @Query() query: QueryDto,
-  ) {
+  async navContent(@Param('catdir') catdir: string, @Query() query: QueryDto) {
     const cateinfo = await this.categoryService.findOneByCatdir(catdir, [
       'siteModel',
       'children',

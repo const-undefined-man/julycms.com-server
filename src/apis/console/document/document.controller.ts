@@ -44,8 +44,8 @@ export class DocumentController {
   @SetMetadata(ReflectMetadataKeys.ACTION_NAME, '添加')
   @Post()
   @VerifyPermission('content:document:create')
-  create(@Body() createDocumentDto: CreateDocumentDto, @Req() req) {
-    return this.documentService.create(createDocumentDto, req.user.userId);
+  create(@Body() createDocumentDto: CreateDocumentDto) {
+    return this.documentService.create(createDocumentDto);
   }
 
   @ApiOperation({ summary: '列表' })
@@ -95,8 +95,8 @@ export class DocumentController {
   @SetMetadata(ReflectMetadataKeys.ACTION_NAME, '修改')
   @Patch()
   @VerifyPermission('content:document:update')
-  update(@Body() updateDocumentDto: UpdateDocumentDto, @Req() req) {
-    return this.documentService.update(updateDocumentDto, req.user.userId);
+  update(@Body() updateDocumentDto: UpdateDocumentDto) {
+    return this.documentService.update(updateDocumentDto);
   }
 
   @ApiOperation({ summary: '删除' })

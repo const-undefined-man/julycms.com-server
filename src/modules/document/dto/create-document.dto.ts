@@ -1,4 +1,3 @@
-import { Tag } from '@app/modules/tag/entities/tag.entity';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsArray,

@@ -1,6 +1,6 @@
-import { QueryDto } from "@app/modules/query-dto"
-import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsNumberString, IsOptional } from "class-validator";
+import { QueryDto } from '@app/modules/query-dto';
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import { IsNumberString, IsOptional } from 'class-validator';
 
 export class QueryPatchDto extends QueryDto {
   @ApiPropertyOptional({ description: 'id', example: 1 })

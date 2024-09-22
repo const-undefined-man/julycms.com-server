@@ -36,8 +36,8 @@ export class TagService {
     if (query.name) {
       where = [
         { name: Like(`%${query.name}%`) },
-        { pinyin: Like(`%${query.name}%`) }
-      ]
+        { pinyin: Like(`%${query.name}%`) },
+      ];
     }
     return paginate(this.tag, options, { where });
   }
@@ -99,21 +99,22 @@ export class TagService {
     return this.tag.count();
   }
 
-  async countHot(): Promise<{ tag: Tag; count: number, range: number }[]> {
+  async countHot(): Promise<{ tag: Tag; count: number; range: number }[]> {
     const queryBuilder = this.tag.createQueryBuilder('tag');
-    const result = await queryBuilder.leftJoinAndSelect('tag.documents', 'document')
+    const result = await queryBuilder
+      .leftJoinAndSelect('tag.documents', 'document')
       .groupBy('tag.id')
       .addOrderBy('COUNT(document.id)', 'DESC')
       .select(['tag', 'COUNT(document.id) AS documentCount'])
       .limit(7)
       .getRawMany();
 
-    let max = result[0].documentCount;
+    const max = result[0].documentCount;
 
-    return result.map(row => ({
+    return result.map((row) => ({
       tag: row.tag_name,
       count: row.documentCount,
-      range: +(row.documentCount/max*100).toFixed(0)
+      range: +((row.documentCount / max) * 100).toFixed(0),
     }));
   }
 }

@@ -1,5 +1,11 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber, IsOptional, Length, MaxLength } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  Length,
+  MaxLength,
+} from 'class-validator';
 
 export class CreateSiteModelDto {
   @ApiProperty({ description: '模型名称', example: '文章模型' })

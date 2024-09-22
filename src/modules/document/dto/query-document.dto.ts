@@ -1,4 +1,3 @@
-
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { IsNumberString, IsOptional, MaxLength } from 'class-validator';
 import { QueryDto } from '@app/modules/query-dto';

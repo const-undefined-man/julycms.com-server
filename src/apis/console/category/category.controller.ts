@@ -39,31 +39,37 @@ export class CategoryController {
   @SetMetadata(ReflectMetadataKeys.ACTION_NAME, '添加')
   @Post()
   @VerifyPermission('content:category:create')
-  async create(@Body() createCategoryDto: CreateCategoryDto, @Req() req) {
+  async create(@Body() createCategoryDto: CreateCategoryDto) {
     const { catname, catnameEn, siteModel } = createCategoryDto;
 
     // 检查栏目标题重复
     const hasCatname = await this.categoryService.findOneBy({ catname });
     if (hasCatname) {
-      const message = $t('common.dataExist', { args: { name: catname } }) as string;
+      const message = $t('common.dataExist', {
+        args: { name: catname },
+      }) as string;
       throw new BusinessException({ code: 0, message });
     }
 
     // 检查英文栏目标题重复
     const hasCatnameEn = await this.categoryService.findOneBy({ catnameEn });
     if (hasCatnameEn) {
-      const message = $t('common.dataExist', { args: { name: catnameEn } }) as string;
+      const message = $t('common.dataExist', {
+        args: { name: catnameEn },
+      }) as string;
       throw new BusinessException({ code: 0, message });
     }
 
     // 检查模型是否存在
     const hasModel = await this.siteModelService.findOne(siteModel.id);
     if (!hasModel) {
-      const message = $t('category.modelNotFound', { args: { name: siteModel.id } }) as string;
+      const message = $t('category.modelNotFound', {
+        args: { name: siteModel.id },
+      }) as string;
       throw new BusinessException({ code: 0, message });
     }
 
-    return this.categoryService.create(createCategoryDto, req.user.userId);
+    return this.categoryService.create(createCategoryDto);
   }
 
   @ApiOperation({ summary: '列表' })
@@ -88,8 +94,8 @@ export class CategoryController {
   @SetMetadata(ReflectMetadataKeys.ACTION_NAME, '修改')
   @Patch()
   @VerifyPermission('content:category:update')
-  update(@Body() updateCategoryDto: UpdateCategoryDto, @Req() req) {
-    return this.categoryService.update(updateCategoryDto, req.user.userId);
+  update(@Body() updateCategoryDto: UpdateCategoryDto) {
+    return this.categoryService.update(updateCategoryDto);
   }
 
   @ApiOperation({ summary: '删除' })

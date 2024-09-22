@@ -19,7 +19,7 @@ export class OperationLogService {
     const options: IPaginationOptions = {
       page: query.page,
       limit: query.limit,
-    }
+    };
     const where: FindOptionsWhere<OperationLog> = {};
     if (query.username) {
       where.username = query.username;

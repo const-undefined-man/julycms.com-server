@@ -20,7 +20,10 @@ export class Attachement extends CommonEntity {
   @Column({ type: 'varchar', nullable: true, comment: '文件类型', length: 255 })
   mimetype: string | null;
 
-  @ApiPropertyOptional({ description: '操作人类型；0 未知； 1 管理员；2 用户', default: 1 })
+  @ApiPropertyOptional({
+    description: '操作人类型；0 未知； 1 管理员；2 用户',
+    default: 1,
+  })
   @Column({
     type: 'tinyint',
     width: 1,

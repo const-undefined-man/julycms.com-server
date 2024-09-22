@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsArray, IsNumber, IsOptional, MaxLength } from 'class-validator';
+import { IsArray, IsNumber, IsOptional } from 'class-validator';
 import { QueryDto } from '@app/modules/query-dto';
 
 export class QueryAttachementDto extends QueryDto {

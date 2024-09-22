@@ -4,7 +4,6 @@ import { UpdatePatchDto } from './dto/update-patch.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Patch } from './entities/patch.entity';
 import { In, Like, Repository } from 'typeorm';
-import { IPaginationOptions } from 'nestjs-typeorm-paginate';
 import { BusinessException } from '@app/common';
 import { queryParams } from './type';
 import { PatchText } from './entities/patch-text.entity';
@@ -165,7 +164,7 @@ export class PatchService {
     });
   }
 
-  createPatchList(createPatchListDto: CreatePatchListDto, managerId: number) {
+  createPatchList(createPatchListDto: CreatePatchListDto) {
     const patchList = new PatchList();
     ['title', 'description', 'url'].forEach(
       (v) => (patchList[v] = createPatchListDto[v]),
@@ -184,10 +183,7 @@ export class PatchService {
     return this.patchList.save(patchList);
   }
 
-  async updatePatchList(
-    updatePatchListDto: UpdatePatchListDto,
-    managerId: number,
-  ) {
+  async updatePatchList(updatePatchListDto: UpdatePatchListDto) {
     const patchList = new PatchList();
     ['id', 'title', 'description', 'url'].forEach(
       (v) => (patchList[v] = updatePatchListDto[v]),

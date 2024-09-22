@@ -1,6 +1,6 @@
-import { QueryDto } from "@app/modules/query-dto";
-import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsOptional } from "class-validator";
+import { QueryDto } from '@app/modules/query-dto';
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import { IsOptional } from 'class-validator';
 
 export class QueryLogDto extends QueryDto {
   @ApiPropertyOptional({ description: '操作人', example: 'admin' })

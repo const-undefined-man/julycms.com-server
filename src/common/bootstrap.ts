@@ -7,7 +7,11 @@ import { mw as requestIpMw } from 'request-ip';
 import { ResponseInterceptor, HttpFilter } from './';
 import { WINSTON_LOGGER } from './winston/winston.module';
 import { OperationLogInterceptor } from './interceptors/operation-log.interceptor';
-import { I18nMiddleware, I18nValidationExceptionFilter, I18nValidationPipe } from 'nestjs-i18n';
+import {
+  I18nMiddleware,
+  I18nValidationExceptionFilter,
+  I18nValidationPipe,
+} from 'nestjs-i18n';
 
 declare const module: any;
 
@@ -40,15 +44,18 @@ export const commonBootstrap = (app) => {
   app.useGlobalInterceptors(new ResponseInterceptor());
 
   // 全局异常处理
-  app.useGlobalFilters(new HttpFilter(), new I18nValidationExceptionFilter({
-    responseBodyFormatter(host, exc, errors) {
-      return {
-        code: 400,
-        data: null,
-        message: errors[0]
-      }
-    }
-  }));
+  app.useGlobalFilters(
+    new HttpFilter(),
+    new I18nValidationExceptionFilter({
+      responseBodyFormatter(host, exc, errors) {
+        return {
+          code: 400,
+          data: null,
+          message: errors[0],
+        };
+      },
+    }),
+  );
 
   // 启动全局字段校验，保证请求接口字段校验正确。
   app.useGlobalPipes(new I18nValidationPipe());

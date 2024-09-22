@@ -98,5 +98,4 @@ export class MenuController {
   ) {
     return this.menuService.listorder(id, listorder);
   }
-
 }

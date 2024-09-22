@@ -12,7 +12,6 @@ import { Tag } from '../tag/entities/tag.entity';
 import { Content } from './entities/content.entity';
 import { Attachement } from '../attachement/entities/attachement.entity';
 import { Link } from './entities/link.entity';
-import { Manager } from '../manager/entities/manager.entity';
 import { AttachementService } from '../attachement/attachement.service';
 import { CounterService } from '../counter/counter.service';
 import { SencetiveService } from '../sencetive/sencetive.service';
@@ -28,7 +27,7 @@ export class DocumentService {
     private readonly sencetiveService: SencetiveService,
   ) {}
 
-  async create(createDocumentDto: CreateDocumentDto, managerId: number) {
+  async create(createDocumentDto: CreateDocumentDto) {
     const document = new Document();
     [
       'title',
@@ -52,7 +51,10 @@ export class DocumentService {
     document.category = category;
 
     // 关联附件-文章封面
-    if (isNotEmptyObject(createDocumentDto.cover) && createDocumentDto.cover.id) {
+    if (
+      isNotEmptyObject(createDocumentDto.cover) &&
+      createDocumentDto.cover.id
+    ) {
       const { id } = createDocumentDto.cover;
 
       const attachement = new Attachement();
@@ -166,7 +168,7 @@ export class DocumentService {
     });
   }
 
-  async update(updateDocumentDto: UpdateDocumentDto, managerId: number) {
+  async update(updateDocumentDto: UpdateDocumentDto) {
     const document = new Document();
     [
       'id',

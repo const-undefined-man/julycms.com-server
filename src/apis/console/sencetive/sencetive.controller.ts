@@ -48,7 +48,10 @@ export class SencetiveController {
   @Get()
   @VerifyPermission('site:sencetive:query')
   findAll(@Query() query: QueryDto) {
-    return this.sencetiveService.findAll({ page: query.page || 1, limit: query.limit || 10 });
+    return this.sencetiveService.findAll({
+      page: query.page || 1,
+      limit: query.limit || 10,
+    });
   }
 
   @ApiOperation({ summary: '详细' })

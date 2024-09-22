@@ -4,7 +4,7 @@ import { UpdateRoleDto } from './dto/update-role.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Role } from './entities/role.entity';
 import { In, Like, Repository } from 'typeorm';
-import { paginate, IPaginationOptions } from 'nestjs-typeorm-paginate';
+import { paginate } from 'nestjs-typeorm-paginate';
 import { $t, BusinessException } from '@app/common';
 import { Menu } from '../menu/entities/menu.entity';
 import { QueryRoleDto } from './dto/query-role.dto';
@@ -19,7 +19,9 @@ export class RoleService {
     // 检查是否存在
     const isHas = await this.findOneByName(createRoleDto.name);
     if (isHas) {
-      const message = $t('common.dataExist', { args: { name: createRoleDto.name } }) as string;
+      const message = $t('common.dataExist', {
+        args: { name: createRoleDto.name },
+      }) as string;
       throw new BusinessException({ code: 0, message });
     }
 
@@ -48,15 +50,15 @@ export class RoleService {
     const paginationMeta = {
       page: options.page || 1,
       limit: options.limit || 10,
-    }
-    let where: Record<string, any> = {};
+    };
+    const where: Record<string, any> = {};
     if (options.display !== undefined) {
       where.display = options.display;
     }
     if (options.name) {
       where.name = Like(`%${options.name}%`);
     }
-    return paginate(this.role, paginationMeta, {where});
+    return paginate(this.role, paginationMeta, { where });
   }
 
   findOne(id: number) {

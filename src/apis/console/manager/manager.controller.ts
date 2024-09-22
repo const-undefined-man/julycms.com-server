@@ -45,7 +45,10 @@ export class ManagerController {
   @Get()
   @VerifyPermission('system:manager:query')
   findAll(@Query() query: QueryDto) {
-    return this.managerService.findAll({ page: query.page || 1, limit: query.limit || 10 });
+    return this.managerService.findAll({
+      page: query.page || 1,
+      limit: query.limit || 10,
+    });
   }
 
   @ApiOperation({ summary: '详细' })
