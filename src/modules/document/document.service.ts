@@ -10,9 +10,7 @@ import { Category } from '../category/entities/category.entity';
 import { Document } from './entities/document.entity';
 import { Tag } from '../tag/entities/tag.entity';
 import { Content } from './entities/content.entity';
-import { Attachement } from '../attachement/entities/attachement.entity';
 import { Link } from './entities/link.entity';
-import { AttachementService } from '../attachement/attachement.service';
 import { CounterService } from '../counter/counter.service';
 import { SencetiveService } from '../sencetive/sencetive.service';
 import { CategoryService } from '../category/category.service';
@@ -23,7 +21,6 @@ export class DocumentService {
     @InjectRepository(Document) private readonly document: Repository<Document>,
     private readonly categoryService: CategoryService,
     private readonly counterService: CounterService,
-    private readonly attachementService: AttachementService,
     private readonly sencetiveService: SencetiveService,
   ) {}
 
@@ -51,17 +48,7 @@ export class DocumentService {
     document.category = category;
 
     // 关联附件-文章封面
-    if (
-      isNotEmptyObject(createDocumentDto.cover) &&
-      createDocumentDto.cover.id
-    ) {
-      const { id } = createDocumentDto.cover;
-
-      const attachement = new Attachement();
-      attachement.id = id;
-
-      document.cover = attachement;
-    }
+    document.coverId = createDocumentDto.cover?.id || null;
 
     // tag
     if (createDocumentDto.tags) {
@@ -193,18 +180,7 @@ export class DocumentService {
     document.category = category;
 
     // 关联附件-文章封面
-    if (isNotEmptyObject(updateDocumentDto.cover) && updateDocumentDto.cover) {
-      const attachement = new Attachement();
-      const { id, url } = updateDocumentDto.cover;
-
-      attachement.id = id;
-      const oldCover = await this.attachementService.findOne(id);
-      if (oldCover.url !== url) {
-        await this.attachementService.removeFile(id);
-      }
-
-      document.cover = attachement;
-    }
+    document.coverId = updateDocumentDto.cover?.id || null;
 
     // tag
     const tags = [];

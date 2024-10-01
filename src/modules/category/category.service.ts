@@ -7,9 +7,7 @@ import { TreeRepository } from 'typeorm';
 import { BusinessException } from '@app/common';
 import { SiteModel } from '../site-model/entities/site-model.entity';
 import { AttachementService } from '../attachement/attachement.service';
-import { Attachement } from '../attachement/entities/attachement.entity';
 import { MoveCategoryDto } from './dto/move-category.dto';
-import { isNotEmptyObject } from 'class-validator';
 
 @Injectable()
 export class CategoryService {
@@ -44,20 +42,10 @@ export class CategoryService {
     }
 
     // 关联附件-栏目封面
-    if (isNotEmptyObject(cover) && cover.id) {
-      const attachement = new Attachement();
-      attachement.id = cover.id;
-
-      data.cover = attachement;
-    }
+    data.coverId = cover?.id || null;
 
     // 关联附件-栏目图片icon
-    if (isNotEmptyObject(imgIcon) && imgIcon.id) {
-      const attachement = new Attachement();
-      attachement.id = imgIcon.id;
-
-      data.imgIcon = attachement;
-    }
+    data.imgIconId = imgIcon?.id || null;
 
     // parent
     if (parent.id) {
@@ -115,31 +103,10 @@ export class CategoryService {
     }
 
     // 关联附件-栏目封面
-    if (isNotEmptyObject(cover) && cover.id) {
-      const attachement = new Attachement();
-
-      attachement.id = cover.id;
-      const oldCover = await this.attachementService.findOne(cover.id);
-      if (oldCover.url !== cover.url) {
-        await this.attachementService.removeFile(cover.id);
-      }
-
-      data.cover = attachement;
-    }
+    data.coverId = cover?.id || null;
 
     // 关联附件-栏目图片icon
-    if (isNotEmptyObject(imgIcon) && imgIcon.id) {
-      const attachement = new Attachement();
-      const { id, url } = imgIcon;
-
-      attachement.id = id;
-      const oldIcon = await this.attachementService.findOne(id);
-      if (oldIcon.url !== url) {
-        await this.attachementService.removeFile(id);
-      }
-
-      data.imgIcon = attachement;
-    }
+    data.imgIconId = imgIcon?.id || null;
 
     // parent
     if (parent.id) {

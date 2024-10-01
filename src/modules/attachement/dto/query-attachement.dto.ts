@@ -1,11 +1,11 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsArray, IsNumber, IsOptional } from 'class-validator';
+import { IsArray, IsNumberString, IsOptional } from 'class-validator';
 import { QueryDto } from '@app/modules/query-dto';
 
 export class QueryAttachementDto extends QueryDto {
   @ApiPropertyOptional({ description: 'id' })
   @IsOptional()
-  @IsNumber(undefined, { message: 'common.IsNumber' })
+  @IsNumberString(undefined, { message: 'common.IsNumber' })
   id?: number;
 
   @ApiPropertyOptional({ description: '大小' })
@@ -15,7 +15,7 @@ export class QueryAttachementDto extends QueryDto {
 
   @ApiPropertyOptional({ description: '操作人' })
   @IsOptional()
-  @IsNumber(undefined, { message: 'common.IsNumber' })
+  @IsNumberString(undefined, { message: 'common.IsNumber' })
   operatorId?: number;
 
   @ApiPropertyOptional({ description: '创建时间' })

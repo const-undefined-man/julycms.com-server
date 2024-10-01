@@ -42,6 +42,10 @@ export class Category extends CommonEntity {
   @Column({ type: 'varchar', length: 64, nullable: true, comment: '栏目icon' })
   icon: string | null;
 
+  @ApiPropertyOptional({ description: '栏目图片iconid' })
+  @Column({ nullable: true })
+  imgIconId: number | null;
+
   @ApiPropertyOptional({ description: '栏目图片icon', type: Attachement })
   @OneToOne(() => Attachement, (attachement) => attachement.categoryImgIcon, {
     cascade: true,
@@ -50,7 +54,10 @@ export class Category extends CommonEntity {
   @JoinColumn()
   imgIcon: Attachement;
 
-  // @Column({ type: 'varchar', length: 255, nullable: true, comment: '栏目封面' })
+  @ApiPropertyOptional({ description: '栏目封面id' })
+  @Column({ nullable: true })
+  coverId: number | null;
+
   @ApiPropertyOptional({ description: '栏目封面', type: Attachement })
   @OneToOne(() => Attachement, (attachement) => attachement.category, {
     cascade: true,

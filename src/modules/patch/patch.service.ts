@@ -12,12 +12,10 @@ import { Attachement } from '../attachement/entities/attachement.entity';
 import { UpdatePatchTextDto } from './dto/update-patch-text.dto';
 import { CreatePatchListDto } from './dto/create-patch-list.dto';
 import { UpdatePatchListDto } from './dto/update-patch-list.dto';
-import { AttachementService } from '../attachement/attachement.service';
 import { BatchDisplayDto } from './dto/batch-display.dto';
 import { Manager } from '../manager/entities/manager.entity';
 import { existsSync, unlinkSync } from 'fs';
 import * as path from 'path';
-import { isNotEmptyObject } from 'class-validator';
 import { QueryPatchDto } from './dto/query-patch.dto';
 
 @Injectable()
@@ -30,8 +28,6 @@ export class PatchService {
 
     @InjectRepository(PatchList)
     private readonly patchList: Repository<PatchList>,
-
-    private readonly attachementService: AttachementService,
   ) {}
 
   create(createPatchDto: CreatePatchDto, managerId: number) {
@@ -170,11 +166,7 @@ export class PatchService {
       (v) => (patchList[v] = createPatchListDto[v]),
     );
 
-    if (isNotEmptyObject(createPatchListDto.img) && createPatchListDto.img.id) {
-      const attachement = new Attachement();
-      attachement.id = createPatchListDto.img.id;
-      patchList.img = attachement;
-    }
+    patchList.imgId = createPatchListDto.img?.id || null;
 
     const patch = new Patch();
     patch.id = createPatchListDto.patchId;
@@ -189,16 +181,7 @@ export class PatchService {
       (v) => (patchList[v] = updatePatchListDto[v]),
     );
 
-    if (isNotEmptyObject(updatePatchListDto.img) && updatePatchListDto.img.id) {
-      const attachement = new Attachement();
-      const { id, url } = updatePatchListDto.img;
-
-      const oldIcon = await this.attachementService.findOne(id);
-      if (oldIcon.url !== url) {
-        await this.attachementService.removeFile(id);
-      }
-      patchList.img = attachement;
-    }
+    patchList.imgId = updatePatchListDto.img?.id || null;
 
     return this.patchList.save(patchList);
   }

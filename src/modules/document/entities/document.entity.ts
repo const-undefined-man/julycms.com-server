@@ -35,6 +35,10 @@ export class Document extends CommonEntity {
   @JoinTable()
   tags: Tag[];
 
+  @ApiPropertyOptional({ description: '封面图片id' })
+  @Column({ nullable: true })
+  coverId: number | null;
+
   // 封面图片
   @ApiPropertyOptional({ description: '封面图片', type: Attachement })
   @OneToOne(() => Attachement, (attachement) => attachement.document, {

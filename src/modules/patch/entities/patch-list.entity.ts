@@ -14,6 +14,10 @@ export class PatchList extends CommonEntity {
   @Column({ type: 'varchar', length: 255, nullable: true, comment: '描述' })
   description: string | null;
 
+  @ApiPropertyOptional({ description: '图片id' })
+  @Column({ nullable: true })
+  imgId: number | null;
+
   @ApiPropertyOptional({ description: '图片', type: Attachement })
   @OneToOne(() => Attachement, (attachement) => attachement.patchList, {
     cascade: true,

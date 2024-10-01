@@ -42,6 +42,10 @@ export class Manager extends CommonEntity {
   })
   isAdmin: number;
 
+  @ApiPropertyOptional({ description: '头像图片id' })
+  @Column({ nullable: true })
+  avatarId: number | null;
+
   @ApiPropertyOptional({ description: '头像', type: Attachement })
   @OneToOne(() => Attachement, (attachement) => attachement.manager, {
     cascade: true,

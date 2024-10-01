@@ -9,9 +9,7 @@ import { BusinessException } from '@app/common';
 import * as bcryptjs from 'bcryptjs';
 import { Role } from '../role/entities/role.entity';
 import { IPaginationOptions, paginate } from 'nestjs-typeorm-paginate';
-import { Attachement } from '../attachement/entities/attachement.entity';
 import { AttachementService } from '../attachement/attachement.service';
-import { isNotEmptyObject } from 'class-validator';
 
 @Injectable()
 export class ManagerService {
@@ -43,12 +41,7 @@ export class ManagerService {
     });
 
     // 关联附件-头像
-    if (isNotEmptyObject(createManagerDto.avatar)) {
-      const attachement = new Attachement();
-      attachement.id = createManagerDto.avatar.id;
-
-      manager.avatar = attachement;
-    }
+    manager.avatarId = createManagerDto.avatar?.id || null;
 
     // 关联角色
     const roles = [];
@@ -92,12 +85,7 @@ export class ManagerService {
     });
 
     // 关联附件-头像
-    if (isNotEmptyObject(updateManagerDto.avatar)) {
-      const attachement = new Attachement();
-      attachement.id = updateManagerDto.avatar.id;
-
-      manager.avatar = attachement;
-    }
+    manager.avatarId = updateManagerDto.avatar?.id || null;
 
     // 关联角色
     const roles = [];
